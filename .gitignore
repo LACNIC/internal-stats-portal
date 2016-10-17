@@ -1,0 +1,11 @@
+# do NOT track Python compilation files
+*.py[cod]
+
+# Linux Editors & IDEs
+.idea
+
+# Virtualenv
+venv
+
+# Ignore local_settings.py
+local_settings.py
