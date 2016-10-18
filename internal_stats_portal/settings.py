@@ -107,6 +107,17 @@ TIME_ZONE = 'America/Montevideo'
 
 STATIC_URL = '/static/'
 
+# Database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'internal_stats_portal',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': ''
+    }
+}
 
 # Import local_settings.py
 try:
