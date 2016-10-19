@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 3rd Party apps
+    'easy_select2',
+
+    # internal-stats-portal apps
+    'users',
     'core',
 ]
 
@@ -119,6 +125,8 @@ DATABASES = {
         'PORT': ''
     }
 }
+
+AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 # Import local_settings.py
 try:
