@@ -25,6 +25,10 @@ class PublicationAdmin(admin.ModelAdmin):
     list_filter = ('publishable', 'created', 'modified',)
     filter_horizontal = ('data_sources', 'responsibles', 'databases',)
     ordering = ('-created',)
+    fields = ('name', 'description', 'programming_language', 'data_sources',
+              ('update_value', 'update_type'), 'creator', 'responsibles',
+              'databases', 'server_path', 'file_path', 'publishable', 'created',
+              'modified', 'tags')
     form = select2_modelform(Publication)
 
 

@@ -14,6 +14,7 @@ class DataSource(Model):
 
     def short_notes(self):
         return truncate_text(self.notes, 100)
+
     short_notes.short_description = 'notas'
 
     def __unicode__(self):
@@ -68,16 +69,18 @@ class Publication(Model):
                                      max_length=30, blank=True, null=True)
     data_sources = ManyToManyField(DataSource, verbose_name='fuentes de datos',
                                    blank=True)
-    update_value = PositiveSmallIntegerField('valor de actualización de datos',
-                                             blank=True, null=True)
-    update_type = CharField('tipo de valor de actualización de datos',
+    update_value = PositiveSmallIntegerField(
+        'intervalo de actualización',
+        blank=True, null=True,
+        help_text='Cada cuanto se generan/actualizan los datos')
+    update_type = CharField('unidad de intervalo de actualización',
                             max_length=10, choices=UPDATE_TYPE_CHOICES,
                             blank=True, null=True)
     creator = OneToOneField(settings.AUTH_USER_MODEL, verbose_name='creador',
-                            related_name='%(app_label)s_%(class)s_creator')
+                            related_name='%(class)s_creator')
     responsibles = ManyToManyField(settings.AUTH_USER_MODEL,
                                    verbose_name='responsables',
-                                   related_name='%(app_label)s_%(class)s_responsible')
+                                   related_name='%(class)s_responsible')
     databases = ManyToManyField(Database, verbose_name='bases de datos',
                                 blank=True)
     server_path = URLField('ruta al servidor', blank=True, null=True)
@@ -89,6 +92,7 @@ class Publication(Model):
 
     def short_description(self):
         return truncate_text(self.description, 50)
+
     short_description.short_description = 'descripción'
 
     def __unicode__(self):
