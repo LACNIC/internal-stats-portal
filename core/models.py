@@ -12,9 +12,9 @@ from .util import truncate_text
 class DataSource(Model):
     notes = TextField('notas', unique=True, blank=True, null=True)
 
-    @property
     def short_notes(self):
         return truncate_text(self.notes, 100)
+    short_notes.short_description = 'notas'
 
     def __unicode__(self):
         return self.notes
@@ -87,9 +87,9 @@ class Publication(Model):
     modified = DateTimeField('última modificación')
     tags = ManyToManyField(Tag, verbose_name='tags')
 
-    @property
     def short_description(self):
         return truncate_text(self.description, 50)
+    short_description.short_description = 'descripción'
 
     def __unicode__(self):
         return self.name
