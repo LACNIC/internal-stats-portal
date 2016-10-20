@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.conf import settings
-from django.db.models import Model, CharField, TextField, BooleanField, \
-    DateTimeField, PositiveSmallIntegerField, URLField, \
-    OneToOneField, ManyToManyField
+from django.db.models import (Model, CharField, TextField, BooleanField,
+                              DateTimeField, PositiveSmallIntegerField,
+                              URLField,
+                              OneToOneField, ManyToManyField)
 from pygments.lexers import get_all_lexers
 from .util import truncate_text
 
