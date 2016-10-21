@@ -93,14 +93,16 @@ class Publication(Model):
 
     def short_description(self):
         return truncate_text(self.description, 50)
+
     short_description.short_description = 'descripción'
 
     def clean(self):
         # Business rules
-        if self.update_value and not self.update_type or\
+        if self.update_value and not self.update_type or \
                         not self.update_value and self.update_type:
             raise ValidationError(
-                {'update_type': 'Se deben asignar ambos valores de intervalo de actualización de datos o ninguno de ellos.'})
+                {
+                    'update_type': 'Se deben asignar ambos valores de intervalo de actualización de datos o ninguno de ellos.'})
 
     def __unicode__(self):
         return self.name
