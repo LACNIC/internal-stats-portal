@@ -12,8 +12,8 @@ class UserProfile(Model):
         return self.user.username
 
     class Meta:
-        verbose_name = 'user profile'
-        verbose_name_plural = 'user profiles'
+        verbose_name = 'Perfil de usuario'
+        verbose_name_plural = 'Perfil de usuario'
 
 
 def create_user_profile(sender, instance, created, **kwargs):
