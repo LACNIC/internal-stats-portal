@@ -38,6 +38,11 @@ class PublicationAdmin(admin.ModelAdmin):
             fields = ('creator', ) + fields
         return fields
 
+    def get_queryset(self, request):
+        qs = super(PublicationAdmin, self).get_queryset(request)
+        if not request.user.is_superuser:
+            return qs.filter(creator=request.user)
+        return qs
 
 admin.site.register(DataSource, DataSourceAdmin)
 admin.site.register(Database, DatabaseAdmin)

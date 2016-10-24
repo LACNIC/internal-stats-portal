@@ -18,6 +18,11 @@ class UserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     inlines = (UserProfileInline,)
 
+    def get_queryset(self, request):
+        qs = super(UserAdmin, self).get_queryset(request)
+        if not request.user.is_superuser:
+            return qs.filter(pk=request.user.pk)
+        return qs
 
 # Re-register UserAdmin
 admin.site.unregister(User)
