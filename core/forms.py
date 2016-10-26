@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ObjectDoesNotExist
 from easy_select2 import apply_select2
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from .models import Publication
@@ -7,9 +8,22 @@ from .models import Publication
 def publication_model_form_factory(input_user):
     class PublicationModelForm(forms.ModelForm):
 
+        def clean(self):
+            cleaned_data = super(PublicationModelForm, self).clean()
+            try:
+                if not input_user.is_superuser and \
+                                input_user != self.instance.creator:
+                    raise forms.ValidationError(
+                        'Solo puedes modificar publicaciones de las cuales'
+                        ' seas el creador.', code='invalid')
+            except ObjectDoesNotExist:
+                # FK hasn't loaded yet.
+                pass
+            return cleaned_data
+
         def save(self, *args, **kwargs):
             obj = super(PublicationModelForm, self).save(*args, **kwargs)
-            if not input_user.is_superuser:
+            if obj.pk is None and not input_user.is_superuser:
                 obj.creator = input_user
             obj.save()
             return obj

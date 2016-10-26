@@ -38,11 +38,20 @@ class PublicationAdmin(admin.ModelAdmin):
             fields = ('creator', ) + fields
         return fields
 
-    def get_queryset(self, request):
-        qs = super(PublicationAdmin, self).get_queryset(request)
+    def get_actions(self, request):
+        actions = super(PublicationAdmin, self).get_actions(request)
         if not request.user.is_superuser:
-            return qs.filter(creator=request.user)
-        return qs
+            if 'delete_selected' in actions:
+                del actions['delete_selected']
+        return actions
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if obj is not None and request.user == obj.creator:
+            return True
+        return False
+
 
 admin.site.register(DataSource, DataSourceAdmin)
 admin.site.register(Database, DatabaseAdmin)
