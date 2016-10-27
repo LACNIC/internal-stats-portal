@@ -4,8 +4,8 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import (Model, CharField, TextField, BooleanField,
                               DateTimeField, PositiveSmallIntegerField,
-                              URLField,
-                              OneToOneField, ManyToManyField)
+                              URLField, OneToOneField, ManyToManyField,
+                              ForeignKey)
 from pygments.lexers import get_all_lexers
 from .util import truncate_text
 
@@ -77,7 +77,7 @@ class Publication(Model):
     update_type = CharField('unidad de intervalo de actualización',
                             max_length=10, choices=UPDATE_TYPE_CHOICES,
                             blank=True, null=True)
-    creator = OneToOneField(settings.AUTH_USER_MODEL, verbose_name='creador',
+    creator = ForeignKey(settings.AUTH_USER_MODEL, verbose_name='creador',
                             related_name='%(class)s_creator')
     responsibles = ManyToManyField(settings.AUTH_USER_MODEL,
                                    verbose_name='responsables',

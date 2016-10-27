@@ -22,11 +22,9 @@ def publication_model_form_factory(input_user):
             return cleaned_data
 
         def save(self, *args, **kwargs):
-            obj = super(PublicationModelForm, self).save(*args, **kwargs)
-            if obj.pk is None and not input_user.is_superuser:
-                obj.creator = input_user
-            obj.save()
-            return obj
+            if self.instance.pk is None and not input_user.is_superuser:
+                self.instance.creator = input_user
+            return super(PublicationModelForm, self).save(*args, **kwargs)
 
         class Meta:
             model = Publication
