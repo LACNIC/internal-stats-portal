@@ -97,7 +97,7 @@ class Publication(Model):
 
     def clean(self):
         # Business rules
-        if not (not (self.update_value or self.update_type)):  # XOR
+        if bool(self.update_value) != bool(self.update_type):  # XOR
             raise ValidationError(
                 {
                     'update_type': 'Se deben asignar ambos valores de intervalo'

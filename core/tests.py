@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import datetime
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError, DataError
 from django.forms import ValidationError
 from django.utils import timezone
-import datetime
 from .models import DataSource, Database, Tag
 from .forms import publication_model_form_factory
 
 
 class DataSourceTests(TestCase):
     def test_datasource_model_empty(self):
-        datasource = DataSource.objects.create()
+        datasource = DataSource.objects.create(notes='test')
         datasource.clean_fields()
 
     def test_datasource_unique_constraint(self):
@@ -127,7 +127,7 @@ class PublicationTests(TestCase):
             'update_value': 10,
             'update_type': 'mins',
             'creator': self.superuser.pk,
-            'responsibles': [self.user_1.pk, self.user_2, ],
+            'responsibles': [self.user_1.pk, self.user_2],
             'server_path': 'http://192.168.1.1/example/',
             'file_path': 'home/user/desktop/',
             'publishable': True,
