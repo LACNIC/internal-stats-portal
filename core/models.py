@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from pygments.lexers import get_all_lexers
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from .util import truncate_text
 from django.db.models import (Model, CharField, TextField, BooleanField,
                               DateTimeField, PositiveSmallIntegerField,
-                              URLField, OneToOneField, ManyToManyField,
-                              ForeignKey)
-from pygments.lexers import get_all_lexers
-from .util import truncate_text
+                              URLField, ManyToManyField, ForeignKey)
 
 
 class DataSource(Model):
-    notes = TextField('notas', unique=True, blank=True, null=True)
+    notes = CharField('notas', unique=True, max_length=255)
 
     def short_notes(self):
         return truncate_text(self.notes, 100)
@@ -78,7 +77,7 @@ class Publication(Model):
                             max_length=10, choices=UPDATE_TYPE_CHOICES,
                             blank=True, null=True)
     creator = ForeignKey(settings.AUTH_USER_MODEL, verbose_name='creador',
-                            related_name='%(class)s_creator')
+                         related_name='%(class)s_creator')
     responsibles = ManyToManyField(settings.AUTH_USER_MODEL,
                                    verbose_name='responsables',
                                    related_name='%(class)s_responsible')
@@ -98,11 +97,13 @@ class Publication(Model):
 
     def clean(self):
         # Business rules
-        if self.update_value and not self.update_type or \
-                        not self.update_value and self.update_type:
+        if not all([self.update_value, self.update_type]):
             raise ValidationError(
                 {
-                    'update_type': 'Se deben asignar ambos valores de intervalo de actualización de datos o ninguno de ellos.'})
+                    'update_type': 'Se deben asignar ambos valores de intervalo'
+                                   ' de actualización de datos o ninguno de'
+                                   ' ellos.'
+                })
 
     def __unicode__(self):
         return self.name
