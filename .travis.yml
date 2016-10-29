@@ -1,0 +1,29 @@
+language: python
+sudo: required
+
+python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+
+services:
+  - postgresql
+
+addons:
+  apt:
+    packages:
+    - libpq-dev
+
+
+install:
+  - pip install -r requirements.txt
+
+
+before_script:
+  - psql -c 'CREATE USER root WITH PASSWORD 'root' ALTER USER root WITH SUPERUSER;' -U postgres
+
+script:
+  - python manage.py test
+
