@@ -22,7 +22,7 @@ install:
 
 
 before_script:
-  - psql -c 'CREATE USER root WITH PASSWORD 'root' ALTER USER root WITH SUPERUSER;' -U postgres
+  - psql -c "CREATE USER root WITH PASSWORD 'root' ALTER USER root WITH SUPERUSER;" -U postgres
 
 script:
   - python manage.py test
