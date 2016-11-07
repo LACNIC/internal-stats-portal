@@ -22,7 +22,8 @@ class PublicationAdmin(admin.ModelAdmin):
     list_display = ('name', 'short_description', 'creator', 'created',
                     'modified', 'publishable',)
     search_fields = ('name', 'description', 'creator__username', 'server_path',)
-    list_filter = ('publishable', 'created', 'modified',)
+    list_filter = ('publishable', 'created', 'modified', 'tags', 'creator',
+                   'responsibles', )
     ordering = ('-created',)
 
     def get_form(self, request, obj=None, **kwargs):
