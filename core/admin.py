@@ -21,10 +21,12 @@ class TagAdmin(admin.ModelAdmin):
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('name', 'short_description', 'creator', 'created',
                     'modified', 'publishable',)
-    search_fields = ('name', 'description', 'creator__username', 'server_path',)
+    search_fields = ('name', 'description', 'creator__username', 'server_path',
+                     'responsibles__username', 'tags__name',)
     list_filter = ('publishable', 'created', 'modified', 'tags', 'creator',
-                   'responsibles', )
+                   'responsibles',)
     ordering = ('-created',)
+    date_hierarchy = 'created'
 
     def get_form(self, request, obj=None, **kwargs):
         kwargs['form'] = publication_model_form_factory(request.user)
@@ -33,10 +35,10 @@ class PublicationAdmin(admin.ModelAdmin):
     def get_fields(self, request, obj=None, **kwargs):
         fields = ('name', 'description', 'programming_language', 'data_sources',
                   ('update_value', 'update_type'), 'responsibles',
-                  'databases', 'server_path', 'file_path', 'publishable', 'created',
-                  'modified', 'tags')
+                  'databases', 'server_path', 'file_path', 'publishable',
+                  'created', 'modified', 'tags')
         if request.user.is_superuser:
-            fields = ('creator', ) + fields
+            fields = ('creator',) + fields
         return fields
 
     def get_actions(self, request):
