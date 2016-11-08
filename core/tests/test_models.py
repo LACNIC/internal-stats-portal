@@ -6,8 +6,8 @@ from django.contrib.auth import get_user_model
 from django.db import IntegrityError, DataError
 from django.forms import ValidationError
 from django.utils import timezone
-from .models import DataSource, Database, Tag
-from .forms import publication_model_form_factory
+from core.models import DataSource, Database, Tag
+from core.forms import publication_model_form_factory
 
 
 class DataSourceTests(TestCase):
