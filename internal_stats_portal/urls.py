@@ -26,4 +26,7 @@ urlpatterns = [
 
     # Core
     url(r'^core/', include('core.urls')),
+
+    # Users
+    url(r'^users/', include('users.urls')),
 ]
