@@ -97,7 +97,7 @@ class Publication(Model):
 
     def clean(self):
         # Business rules
-        if self.created > self.modified:
+        if self.created and self.modified and self.created > self.modified:
             raise ValidationError(
                 {
                     'created': 'La fecha de creación debe ser menor o igual a'
