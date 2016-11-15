@@ -162,6 +162,25 @@ class PublicationAPIListTestCase(FixtureTestCase):
         user = auth.get_user(self.client)
         self.assertEqual(response.data['creator'], user.pk)
 
+    def test_modified_date_constraint_publications(self):
+        url = reverse(self.view_name)
+
+        self.login_superuser()
+
+        # POST
+        new_data = {'name': 'rest publication', 'description': 'this is a desc',
+                    'programming_language': 'python', 'update_value': 15,
+                    'update_type': 'days', 'creator': 17,
+                    'server_path': 'http://example.com',
+                    'file_path': '/home/superuser', 'publishable': False,
+                    'created': '2016-11-12T21:52:00-03:00',
+                    'modified': '2016-11-11T22:53:00-03:00',
+                    'data_sources': [5],
+                    'responsibles': [18], 'databases': [4], 'tags': [7]}
+
+        response = self.client.post(url, new_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
 
 class PublicationAPIDetailTestCase(FixtureTestCase):
     view_name = 'api-publications-detail'
@@ -381,6 +400,36 @@ class PublicationAPIDetailTestCase(FixtureTestCase):
         response = self.client.delete(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-        # No podes enviar la informacion del creador cuando no sos superuser
-        # Te tiene que tomar el creador como el propio usuario logueado si no sos superuser
-        # enviar publicaciones con menos attrs de los necesarios
+    def test_modified_date_constraint_publications(self):
+        url = reverse(self.view_name,
+                      kwargs={'pk': self.publication_1_data['id']})
+
+        self.login_superuser()
+
+        # PATCH
+        updated_field = {'created': '2017-11-01T21:52:00-03:00'}
+        response = self.client.patch(url, updated_field, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        updated_field = {'modified': '2015-11-01T21:52:00-03:00'}
+        response = self.client.patch(url, updated_field, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        updated_field = {'created': '2017-11-01T21:52:00-03:00',
+                         'modified': '2015-11-01T21:52:00-03:00'}
+        response = self.client.patch(url, updated_field, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        # PUT
+        new_data = {'name': 'pub replaced', 'description': 'this is a desc',
+                    'programming_language': 'go', 'update_value': 30,
+                    'update_type': 'days', 'creator': 18,
+                    'server_path': 'http://example.com',
+                    'file_path': '/home/superuser', 'publishable': False,
+                    'created': '2017-11-01T21:52:00-03:00',
+                    'modified': '2016-11-12T22:53:00-03:00',
+                    'data_sources': [],
+                    'responsibles': [18], 'databases': [], 'tags': [7]}
+
+        response = self.client.put(url, new_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

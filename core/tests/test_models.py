@@ -201,3 +201,16 @@ class PublicationTests(TestCase):
         }
         form = publication_model_form_factory(self.user_2)(data, instance=pub)
         self.assertFalse(form.is_valid())
+
+    def test_publication_modified_date_constraint(self):
+        data = {
+            'name': 'Publication name',
+            'creator': self.user_1.pk,
+            'responsibles': [self.user_1.pk, self.user_2, ],
+            'file_path': 'home/user/desktop/',
+            'created': timezone.now() + datetime.timedelta(days=1),
+            'modified': timezone.now(),
+            'tags': [self.tag_1, ],
+        }
+        form = publication_model_form_factory(self.superuser)(data)
+        self.assertFalse(form.is_valid())
