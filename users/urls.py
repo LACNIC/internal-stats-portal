@@ -6,5 +6,5 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet, base_name='api-users')
 
 urlpatterns = [
-    url(r'^api/v1/', include(router.urls)),
+    url(r'', include(router.urls)),
 ]

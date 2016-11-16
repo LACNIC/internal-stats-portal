@@ -11,5 +11,5 @@ router.register(r'publications', PublicationViewSet,
                 base_name='api-publications')
 
 urlpatterns = [
-    url(r'^api/v1/', include(router.urls)),
+    url(r'', include(router.urls)),
 ]

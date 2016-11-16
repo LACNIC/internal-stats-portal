@@ -26,7 +26,9 @@ urlpatterns = [
 
     # Core
     url(r'^core/', include('core.urls')),
+    url(r'^api/v1/core/', include('core.urls')),
 
     # Users
     url(r'^users/', include('users.urls')),
+    url(r'^api/v1/users/', include('users.urls')),
 ]
