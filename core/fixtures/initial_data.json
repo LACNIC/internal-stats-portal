@@ -1,0 +1,230 @@
+[
+{
+    "model": "core.datasource",
+    "pk": 5,
+    "fields": {
+        "notes": "Datasource 1"
+    }
+},
+{
+    "model": "core.datasource",
+    "pk": 6,
+    "fields": {
+        "notes": "Datasource 2"
+    }
+},
+{
+    "model": "core.datasource",
+    "pk": 7,
+    "fields": {
+        "notes": "Datasource 3"
+    }
+},
+{
+    "model": "core.database",
+    "pk": 4,
+    "fields": {
+        "name": "Database 1"
+    }
+},
+{
+    "model": "core.database",
+    "pk": 5,
+    "fields": {
+        "name": "Database 2"
+    }
+},
+{
+    "model": "core.database",
+    "pk": 6,
+    "fields": {
+        "name": "Database 3"
+    }
+},
+{
+    "model": "core.tag",
+    "pk": 7,
+    "fields": {
+        "name": "Tag 1"
+    }
+},
+{
+    "model": "core.tag",
+    "pk": 8,
+    "fields": {
+        "name": "Tag 2"
+    }
+},
+{
+    "model": "core.tag",
+    "pk": 9,
+    "fields": {
+        "name": "Tag 3"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 17,
+    "fields": {
+        "password": "pbkdf2_sha256$30000$NsFSQRQJaoRt$BQI/CQfpI16RIXb3KpgndwFSrRjFyF98B2gpts8paP4=",
+        "last_login": "2016-11-07T21:46:32.122Z",
+        "is_superuser": true,
+        "username": "superuser",
+        "first_name": "super",
+        "last_name": "user",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-11-07T21:45:53Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 18,
+    "fields": {
+        "password": "pbkdf2_sha256$30000$qrAUSTk32zK2$j8bTCLIBFsbei9BEB0pi3SEl63z+W4BFdNxG6r1wJIs=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "staff_1",
+        "first_name": "staff",
+        "last_name": "1",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-11-07T21:47:02Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 19,
+    "fields": {
+        "password": "pbkdf2_sha256$30000$2sHrg5Ccs8CQ$yBmnEscbhHVqo9vSheqiOv6nf+aihGsTYOrlyKDR8LU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "staff_2",
+        "first_name": "staff",
+        "last_name": "2",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-11-07T21:49:11Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 20,
+    "fields": {
+        "password": "pbkdf2_sha256$30000$yoVj65AY12t0$1JOJyNiZLLHcCfNPR4eE15BqFLhet1T3/c4CAFcZkU0=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "common_user",
+        "first_name": "common",
+        "last_name": "user",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-11-07T22:06:18Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.publication",
+    "pk": 14,
+    "fields": {
+        "name": "superuser_publication",
+        "description": "This is a superuser publication",
+        "programming_language": "arduino",
+        "update_value": 15,
+        "update_type": "days",
+        "creator": 17,
+        "server_path": "http://www.example.com",
+        "file_path": "/home/example",
+        "publishable": true,
+        "created": "2016-11-07T21:52:09Z",
+        "modified": "2016-11-07T21:52:10Z",
+        "data_sources": [
+            5
+        ],
+        "responsibles": [
+            17,
+            18,
+            19
+        ],
+        "databases": [
+            4
+        ],
+        "tags": [
+            7
+        ]
+    }
+},
+{
+    "model": "core.publication",
+    "pk": 15,
+    "fields": {
+        "name": "staff_1_publication",
+        "description": "",
+        "programming_language": null,
+        "update_value": null,
+        "update_type": null,
+        "creator": 18,
+        "server_path": "",
+        "file_path": "/home/staff_1",
+        "publishable": false,
+        "created": "2016-11-07T21:52:58Z",
+        "modified": "2016-11-07T21:53:00Z",
+        "data_sources": [],
+        "responsibles": [
+            18
+        ],
+        "databases": [],
+        "tags": [
+            8
+        ]
+    }
+},
+{
+    "model": "core.publication",
+    "pk": 16,
+    "fields": {
+        "name": "staff_2_publication",
+        "description": "",
+        "programming_language": "go",
+        "update_value": null,
+        "update_type": null,
+        "creator": 19,
+        "server_path": "",
+        "file_path": "/home/staff_2/desktop",
+        "publishable": false,
+        "created": "2016-11-07T21:53:52Z",
+        "modified": "2016-11-07T21:53:54Z",
+        "data_sources": [
+            5,
+            6,
+            7
+        ],
+        "responsibles": [
+            17,
+            18,
+            19
+        ],
+        "databases": [
+            4,
+            5,
+            6
+        ],
+        "tags": [
+            7,
+            8,
+            9
+        ]
+    }
+}
+]

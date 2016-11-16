@@ -6,8 +6,8 @@ from django.contrib.auth import get_user_model
 from django.db import IntegrityError, DataError
 from django.forms import ValidationError
 from django.utils import timezone
-from .models import DataSource, Database, Tag
-from .forms import publication_model_form_factory
+from core.models import DataSource, Database, Tag
+from core.forms import publication_model_form_factory
 
 
 class DataSourceTests(TestCase):
@@ -200,4 +200,17 @@ class PublicationTests(TestCase):
             'tags': [self.tag_1, ],
         }
         form = publication_model_form_factory(self.user_2)(data, instance=pub)
+        self.assertFalse(form.is_valid())
+
+    def test_publication_modified_date_constraint(self):
+        data = {
+            'name': 'Publication name',
+            'creator': self.user_1.pk,
+            'responsibles': [self.user_1.pk, self.user_2, ],
+            'file_path': 'home/user/desktop/',
+            'created': timezone.now() + datetime.timedelta(days=1),
+            'modified': timezone.now(),
+            'tags': [self.tag_1, ],
+        }
+        form = publication_model_form_factory(self.superuser)(data)
         self.assertFalse(form.is_valid())
