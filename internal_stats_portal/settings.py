@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'ravd+33&$3n9=6yuhua+0#uk2g!pfjag31#_k-&s2dcfh#-$0h'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -40,6 +38,8 @@ INSTALLED_APPS = [
 
     # 3rd Party apps
     'easy_select2',
+    'rest_framework',
+    'crispy_forms',
 
     # internal-stats-portal apps
     'users',
@@ -76,12 +76,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'internal_stats_portal.wsgi.application'
 
-
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = []
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -113,6 +111,19 @@ DATABASES = {
 }
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
+
+# REST Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.DjangoModelPermissions'
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'PAGE_SIZE': 10
+}
 
 # Import local_settings.py
 try:
