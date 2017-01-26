@@ -85,6 +85,7 @@ class Publication(Model):
                                 blank=True)
     server_path = URLField('ruta al servidor', blank=True, null=True)
     file_path = CharField('ruta a los datos', max_length=200)
+    graph_path = CharField('ruta al gráfico', max_length=200)
     publishable = BooleanField('publicable', default=False)
     created = DateTimeField('fecha de creación')
     modified = DateTimeField('última modificación')
