@@ -53,12 +53,14 @@ class Publication(Model):
     MINUTES = 'mins'
     HOURS = 'hours'
     DAYS = 'days'
+    WEEKS = 'weeks'
     MONTHS = 'months'
     YEARS = 'years'
     UPDATE_TYPE_CHOICES = (
         (MINUTES, 'Minuto/s'),
         (HOURS, 'Hora/s'),
         (DAYS, 'Dia/s'),
+        (WEEKS, 'Semana/s'),
         (MONTHS, 'Mes/es'),
         (YEARS, 'Año/s'),
     )
