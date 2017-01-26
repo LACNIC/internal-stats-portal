@@ -88,6 +88,7 @@ class Publication(Model):
     publishable = BooleanField('publicable', default=False)
     created = DateTimeField('fecha de creación')
     modified = DateTimeField('última modificación')
+    started = DateTimeField('primera generación de los datos')
     tags = ManyToManyField(Tag, verbose_name='tags')
 
     def short_description(self):
