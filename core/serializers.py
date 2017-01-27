@@ -61,5 +61,5 @@ class PublicationSerializer(serializers.ModelSerializer):
         model = Publication
         fields = ('id', 'name', 'description', 'programming_language',
                   'data_sources', 'update_value', 'update_type', 'creator',
-                  'responsibles', 'databases', 'server_path', 'file_path',
-                  'publishable', 'created', 'modified', 'tags',)
+                  'responsibles', 'databases', 'server_path', 'file_path', 'graph_path',
+                  'publishable', 'created', 'modified', 'started', 'tags',)
