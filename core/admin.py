@@ -36,7 +36,7 @@ class PublicationAdmin(admin.ModelAdmin):
         fields = ('name', 'description', 'programming_language', 'data_sources',
                   ('update_value', 'update_type'), 'responsibles',
                   'databases', 'server_path', 'file_path', 'graph_path', 'publishable',
-                  'created', 'modified', 'started', 'tags')
+                  'created', 'modified', 'started', 'tags',)
         if request.user.is_superuser:
             fields = ('creator',) + fields
         return fields
