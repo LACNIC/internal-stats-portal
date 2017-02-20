@@ -85,11 +85,11 @@ class Publication(Model):
                                 blank=True)
     server_path = URLField('ruta al servidor', blank=True, null=True)
     file_path = CharField('ruta a los datos', max_length=200)
-    graph_path = CharField('ruta al gráfico', max_length=200)
+    graph_path = CharField('ruta al gráfico', max_length=200, blank=True, null=True)
     publishable = BooleanField('publicable', default=False)
     created = DateTimeField('fecha de creación')
     modified = DateTimeField('última modificación')
-    started = DateTimeField('primera generación de los datos')
+    started = DateTimeField('primera generación de los datos', null=True)
     tags = ManyToManyField(Tag, verbose_name='tags')
 
     def short_description(self):
