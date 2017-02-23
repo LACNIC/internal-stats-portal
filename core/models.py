@@ -4,6 +4,7 @@ from pygments.lexers import get_all_lexers
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from .util import truncate_text
+from django.db.models import CASCADE
 from django.db.models import (Model, CharField, TextField, BooleanField,
                               DateTimeField, PositiveSmallIntegerField,
                               URLField, ManyToManyField, ForeignKey)
@@ -46,6 +47,9 @@ class Tag(Model):
         verbose_name = 'tag'
         verbose_name_plural = 'tags'
 
+class Data(Model):
+    timestamp = PositiveSmallIntegerField(null=True)
+    data = TextField(null=True)
 
 class Publication(Model):
     PROGRAMMING_LANGUAGE_CHOICES = sorted(
@@ -87,9 +91,11 @@ class Publication(Model):
                                 blank=True)
     server_path = URLField('ruta al servidor', blank=True, null=True)
     file_path = CharField('ruta a los datos', max_length=200)
+    graph_path = CharField('ruta al gráfico', max_length=200, blank=True, null=True)
     publishable = BooleanField('publicable', default=False)
     created = DateTimeField('fecha de creación')
     modified = DateTimeField('última modificación')
+    started = DateTimeField('primera generación de los datos', null=True)
     tags = ManyToManyField(Tag, verbose_name='tags')
 
     def short_description(self):
