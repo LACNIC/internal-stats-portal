@@ -4,6 +4,7 @@ from pygments.lexers import get_all_lexers
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from .util import truncate_text
+from django.db.models import CASCADE
 from django.db.models import (Model, CharField, TextField, BooleanField,
                               DateTimeField, PositiveSmallIntegerField,
                               URLField, ManyToManyField, ForeignKey)
@@ -46,6 +47,9 @@ class Tag(Model):
         verbose_name = 'tag'
         verbose_name_plural = 'tags'
 
+class Data(Model):
+    timestamp = PositiveSmallIntegerField(null=True)
+    data = TextField(null=True)
 
 class Publication(Model):
     PROGRAMMING_LANGUAGE_CHOICES = sorted(
