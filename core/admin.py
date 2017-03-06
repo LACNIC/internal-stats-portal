@@ -61,6 +61,14 @@ class PublicationAdmin(admin.ModelAdmin):
             return True
         return False
 
+    def fetch_remote_data(self, request, queryset):
+        for q in queryset:
+            print q, q.file_path
+            q.fetch_remote_data()
+    fetch_remote_data.short_description = "Traer datos de URL externa"
+
+    actions = [fetch_remote_data]
+
 
 admin.site.register(DataSource, DataSourceAdmin)
 admin.site.register(Database, DatabaseAdmin)

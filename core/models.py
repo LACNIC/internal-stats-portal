@@ -4,10 +4,11 @@ from pygments.lexers import get_all_lexers
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from .util import truncate_text
-from django.db.models import CASCADE
 from django.db.models import (Model, CharField, TextField, BooleanField,
                               DateTimeField, PositiveSmallIntegerField,
                               URLField, ManyToManyField, ForeignKey)
+from requests import get as http_get
+from datetime import datetime
 
 
 class DataSource(Model):
@@ -47,9 +48,6 @@ class Tag(Model):
         verbose_name = 'tag'
         verbose_name_plural = 'tags'
 
-class Data(Model):
-    timestamp = PositiveSmallIntegerField(null=True)
-    data = TextField(null=True)
 
 class Publication(Model):
     PROGRAMMING_LANGUAGE_CHOICES = sorted(
@@ -91,7 +89,8 @@ class Publication(Model):
                                 blank=True)
     server_path = URLField('ruta al servidor', blank=True, null=True)  # Informational only field
     file_path = CharField('ruta a los datos', blank=True, max_length=200)
-    graph_path = CharField('ruta al gráfico', max_length=200, blank=True, null=True)  # Auxiliary field (doesn't contain data)
+    graph_path = CharField('ruta al gráfico', max_length=200, blank=True,
+                           null=True)  # Auxiliary field (doesn't contain data)
     publishable = BooleanField('publicable', default=False)
     created = DateTimeField('fecha de creación')
     modified = DateTimeField('última modificación')
@@ -119,9 +118,34 @@ class Publication(Model):
                                    ' ellos.'
                 })
 
+    def fetch_remote_data(self):
+        if self.file_path:
+            response = http_get(self.file_path).text
+            d = Data(
+                data=response,
+                version='0.1',
+                timestamp=datetime.now()
+            )
+            self.data_set.add(
+                d,
+                bulk=False  # Save automatically
+            )
+
     def __unicode__(self):
         return self.name
 
     class Meta:
         verbose_name = 'publicación'
         verbose_name_plural = 'publicaciones'
+
+
+class Data(Model):
+    timestamp = DateTimeField(null=True)
+    data = TextField(null=True)
+    version = CharField(
+        'Version de los datos, en formato Major.minor (mm cambia incrementalmente de forma automática con cada nueva publicación de los datos, MM de misma manera pero cuando cambia la estructura de los datos)',
+        null=False,
+        default='0.0',
+        max_length=20
+    )
+    publication = ForeignKey(Publication)
