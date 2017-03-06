@@ -89,9 +89,9 @@ class Publication(Model):
                                    related_name='%(class)s_responsible')
     databases = ManyToManyField(Database, verbose_name='bases de datos',
                                 blank=True)
-    server_path = URLField('ruta al servidor', blank=True, null=True)
-    file_path = CharField('ruta a los datos', max_length=200)
-    graph_path = CharField('ruta al gráfico', max_length=200, blank=True, null=True)
+    server_path = URLField('ruta al servidor', blank=True, null=True)  # Informational only field
+    file_path = CharField('ruta a los datos', blank=True, max_length=200)
+    graph_path = CharField('ruta al gráfico', max_length=200, blank=True, null=True)  # Auxiliary field (doesn't contain data)
     publishable = BooleanField('publicable', default=False)
     created = DateTimeField('fecha de creación')
     modified = DateTimeField('última modificación')
