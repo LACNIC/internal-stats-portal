@@ -36,10 +36,16 @@ class PublicationAdmin(admin.ModelAdmin):
         fields = ('name', 'description', 'programming_language', 'data_sources',
                   ('update_value', 'update_type'), 'responsibles',
                   'databases', 'server_path', 'file_path', 'graph_path', 'publishable',
-                  'created', 'modified', 'started', 'tags',)
+                   'started', 'tags',)  # 'created', 'modified'
         if request.user.is_superuser:
             fields = ('creator',) + fields
         return fields
+
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return ('started',)
+        else:
+            return ()
 
     def get_actions(self, request):
         actions = super(PublicationAdmin, self).get_actions(request)
