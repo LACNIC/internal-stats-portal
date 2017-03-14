@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
-from .models import DataSource, Database, Tag, Publication
+from .models import DataSource, Database, Tag, Publication, Data
 
 
 class DataSourceSerializer(serializers.ModelSerializer):
@@ -57,9 +57,48 @@ class PublicationSerializer(serializers.ModelSerializer):
             })
         return data
 
+    # New fields
+    # datas = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # data = serializers.SerializerMethodField('get_most_recent_data')
+
+    # def get_most_recent_data(self, publication):
+    #     return publication.get_data()
+
     class Meta:
         model = Publication
         fields = ('id', 'name', 'description', 'programming_language',
                   'data_sources', 'update_value', 'update_type', 'creator',
                   'responsibles', 'databases', 'server_path', 'file_path', 'graph_path',
                   'publishable', 'created', 'modified', 'started', 'tags',)
+
+
+class DataSerializer(serializers.ModelSerializer):
+    """
+        Serializer for Data entity
+    """
+
+    class Meta:
+        model = Data
+        fields = ('id', 'timestamp', 'data', 'version',)
+
+
+class PublicationHyperlinkedSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        Serializer to be used from DatasetsSerializer
+    """
+
+    class Meta:
+        model = Publication
+        fields = ('id', 'description',)
+
+
+class DatasetsSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        Serializer for Datasets publishet at /datasets/
+    """
+
+    publication = PublicationHyperlinkedSerializer()
+
+    class Meta:
+        model = Data
+        fields = ('id', 'timestamp', 'data', 'version', 'publication',)

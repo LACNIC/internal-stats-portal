@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DataSource, Database, Tag, Publication
+from .models import DataSource, Database, Tag, Publication, Category
 from .forms import publication_model_form_factory
 
 
@@ -17,14 +17,16 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
 
+class CategoryAdmin(admin.ModelAdmin):
+    pass
 
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('name', 'short_description', 'creator', 'created',
-                    'modified', 'publishable',)
+                    'modified', 'publishable', 'category',)
     search_fields = ('name', 'description', 'creator__username', 'server_path',
                      'responsibles__username', 'tags__name',)
     list_filter = ('publishable', 'created', 'modified', 'tags', 'creator',
-                   'responsibles',)
+                   'responsibles', 'category',)
     ordering = ('-created',)
     date_hierarchy = 'created'
 
@@ -36,7 +38,7 @@ class PublicationAdmin(admin.ModelAdmin):
         fields = ('name', 'description', 'programming_language', 'data_sources',
                   ('update_value', 'update_type'), 'responsibles',
                   'databases', 'server_path', 'file_path', 'graph_path', 'publishable',
-                   'started', 'tags',)  # 'created', 'modified'
+                   'started', 'tags', 'category',)  # 'created', 'modified'
         if request.user.is_superuser:
             fields = ('creator',) + fields
         return fields
@@ -74,3 +76,4 @@ admin.site.register(DataSource, DataSourceAdmin)
 admin.site.register(Database, DatabaseAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Publication, PublicationAdmin)
+admin.site.register(Category, CategoryAdmin)

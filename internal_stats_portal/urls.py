@@ -31,4 +31,7 @@ urlpatterns = [
     # Users
     url(r'^users/', include('users.urls')),
     url(r'^api/v1/users/', include('users.urls')),
+
+    # URLs for publishing datasets
+    url(r'datasets/', include('core.urls_datasets')),
 ]

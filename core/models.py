@@ -4,7 +4,7 @@ from pygments.lexers import get_all_lexers
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from .util import truncate_text
-from django.db.models import (Model, CharField, TextField, BooleanField,
+from django.db.models import (Model, Manager, CharField, TextField, BooleanField,
                               DateTimeField, PositiveSmallIntegerField,
                               URLField, ManyToManyField, ForeignKey)
 from requests import get as http_get
@@ -47,6 +47,30 @@ class Tag(Model):
     class Meta:
         verbose_name = 'tag'
         verbose_name_plural = 'tags'
+
+
+class Category(Model):
+    """
+        Main category under which the Publications will be exposed. For example opendata.lacnic.net/datasets/<mounting_point>/<my_publication>
+    """
+    name = CharField(
+        null=False,
+        default='N/A',
+        max_length=20
+    )
+
+    mounting_point = CharField(
+        null=False,
+        default='N/A',
+        max_length=20
+    )
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'categoría'
+        verbose_name_plural = 'categorías'
 
 
 class Publication(Model):
@@ -97,6 +121,13 @@ class Publication(Model):
     started = DateTimeField('primera generación de los datos', null=True)
     tags = ManyToManyField(Tag, verbose_name='tags')
 
+    category = ForeignKey(
+        Category,
+        null=True,
+        verbose_name='categoría principal',
+        related_name='%(class)s_category'
+    )
+
     def short_description(self):
         return truncate_text(self.description, 50)
 
@@ -121,15 +152,26 @@ class Publication(Model):
     def fetch_remote_data(self):
         if self.file_path:
             response = http_get(self.file_path).text
+
+            datas = self.data_set.all().order_by('-timestamp')
+            # First Data for this Publication...
+            if len(datas) == 0:
+                version_minor = '1'
+            else:
+                version_minor = datas[0].get_version_minor() + 1
+
             d = Data(
                 data=response,
-                version='0.1',
                 timestamp=datetime.now()
             )
+            d.set_version_minor(version_minor)
             self.data_set.add(
                 d,
                 bulk=False  # Save automatically
             )
+
+    def get_data(self):
+        return Data.objects.get_most_recent_data(publication=self)
 
     def __unicode__(self):
         return self.name
@@ -137,6 +179,28 @@ class Publication(Model):
     class Meta:
         verbose_name = 'publicación'
         verbose_name_plural = 'publicaciones'
+
+
+class DataManager(Manager):
+
+    def get_most_recent_data(self, publication):
+        """
+        :param category:
+        :return:
+        """
+
+        datas = Data.objects.filter(publication=publication).order_by('-timestamp')
+        if len(datas) > 0:
+            return datas[0]
+        else:
+            return None
+
+    def get_most_recent_datasets(self, category=''):
+        """
+        :return: list
+        The most recent Datas from that category
+        """
+        return Data.objects.order_by('publication').distinct('publication')  # .filter(publication__category=category)
 
 
 class Data(Model):
@@ -149,3 +213,19 @@ class Data(Model):
         max_length=20
     )
     publication = ForeignKey(Publication)
+
+    objects = DataManager()
+
+    def get_version_major(self):
+        return int(self.version.split('.')[0])
+
+    def get_version_minor(self):
+        return int(self.version.split('.')[1])
+
+    def set_version_major(self, major):
+        minor = self.get_version_minor()
+        self.version = "%s.%s" % (major, minor)
+
+    def set_version_minor(self, minor):
+        major = self.get_version_major()
+        self.version = "%s.%s" % (major, minor)

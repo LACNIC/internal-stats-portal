@@ -1,9 +1,12 @@
 from rest_framework import viewsets, filters, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from .permissions import IsPublicationOwner
-from .models import DataSource, Database, Tag, Publication
-from .serializers import (DataSourceSerializer, DatabaseSerializer,
+from .models import DataSource, Database, Tag, Publication, Data
+from .serializers import (DataSourceSerializer, DatabaseSerializer, DatasetsSerializer, DataSerializer,
                           TagSerializer, PublicationSerializer)
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 
 
 class DataSourceViewSet(viewsets.ModelViewSet):
@@ -50,3 +53,26 @@ class PublicationViewSet(viewsets.ModelViewSet):
             creator = self.request.user
             serializer.save(creator=creator)
         serializer.save()
+
+
+class DataViewSet(viewsets.ModelViewSet):
+    queryset = Data.objects.all()
+    serializer_class = DataSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class DatasetsList(generics.ListAPIView):
+
+    serializer_class = DatasetsSerializer
+
+    def get_queryset(self):
+        category = self.kwargs['category']
+
+        return Data.objects.filter(
+            publication__category__mounting_point=category
+        ).order_by(
+            'publication',
+            '-timestamp'
+        ).distinct(
+            'publication'
+        )
