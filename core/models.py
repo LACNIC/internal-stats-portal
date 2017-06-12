@@ -7,7 +7,8 @@ from .util import truncate_text
 from django.db.models import (Model, Manager, CharField, TextField, BooleanField,
                               DateTimeField, PositiveSmallIntegerField,
                               URLField, ManyToManyField, ForeignKey)
-from requests import get as http_get
+from requests import get as http_get, head as http_head
+import requests, requests_ftp
 from datetime import datetime
 
 
@@ -149,9 +150,53 @@ class Publication(Model):
                                    ' ellos.'
                 })
 
+    @staticmethod
+    def guess_protocol(url):
+        if 'http://' in url or 'https://' in url:
+            return 'http'
+        elif 'ftp://' in url:
+            return 'ftp'
+
+    def guess_data_protocol(self):
+        return Publication.guess_protocol(self.file_path)
+
+    def guess_chart_protocol(self):
+        return Publication.guess_protocol(self.graph_path)
+
+    @staticmethod
+    def fetch_remote(url):
+        if Publication.guess_protocol(url) == 'http':  # HTTP or HTTPS
+            response = http_get(url).text
+        elif Publication.guess_protocol(url) == 'ftp':
+            requests_ftp.monkeypatch_session()
+            s = requests.Session()
+            response = s.size(url)  # returns a decimal number
+        return response
+
+    @staticmethod
+    def head_remote(url):
+        if Publication.guess_protocol(url) == 'http':  # HTTP or HTTPS
+            response = http_head(url)
+        elif Publication.guess_protocol(url) == 'ftp':
+            requests_ftp.monkeypatch_session()
+            s = requests.Session()
+            response = s.head(url)  # returns a decimal number
+        return response
+
     def fetch_remote_data(self):
+        """
+            Fetch the remote data linked to this Publication.
+            :return:  None
+        """
+
         if self.file_path:
-            response = http_get(self.file_path).text
+
+            if self.guess_data_protocol() == 'http':  # HTTP or HTTPS
+                response = http_get(self.file_path).text
+            elif self.guess_data_protocol() == 'ftp':
+                requests_ftp.monkeypatch_session()
+                s = requests.Session()
+                response = s.get(self.file_path).text
 
             datas = self.data_set.all().order_by('-timestamp')
             # First Data for this Publication...
@@ -182,7 +227,6 @@ class Publication(Model):
 
 
 class DataManager(Manager):
-
     def get_most_recent_data(self, publication):
         """
         :param category:

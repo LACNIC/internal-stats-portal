@@ -44,7 +44,9 @@ def publication_model_form_factory(input_user):
                         if url:
                             try:
                                 URLValidator(url)
-                                response_status_code = http_head(url=url).status_code
+                                response_status_code = Publication.head_remote(
+                                    url
+                                ).status_code  # HEADs either via FTP (FTP SIZE command) or HTTP (HTTP HEAD) http_head(url=url).status_code
                                 if response_status_code != 200:
                                     errors[k] = 'La ruta indicada no es accesible (Return Status != 200)'
                             except Exception as e:
