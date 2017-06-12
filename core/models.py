@@ -117,8 +117,8 @@ class Publication(Model):
     graph_path = CharField('ruta al gráfico', max_length=200, blank=True,
                            null=True)  # Auxiliary field (doesn't contain data)
     publishable = BooleanField('publicable', default=False)
-    created = DateTimeField('fecha de creación')
-    modified = DateTimeField('última modificación')
+    created = DateTimeField('fecha de creación', default=datetime.now)
+    modified = DateTimeField('última modificación', default=datetime.now)
     started = DateTimeField('primera generación de los datos', null=True)
     tags = ManyToManyField(Tag, verbose_name='tags')
 

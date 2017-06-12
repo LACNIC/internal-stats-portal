@@ -4,6 +4,7 @@ from easy_select2 import apply_select2
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from .models import Publication
 from django.core.validators import URLValidator
+from datetime import datetime
 
 from requests import head as http_head
 
@@ -59,6 +60,10 @@ def publication_model_form_factory(input_user):
             return cleaned_data
 
         def save(self, *args, **kwargs):
+
+            if self.has_changed():
+                self.instance.modified = datetime.now()
+
             if self.instance.pk is None and not input_user.is_superuser:
                 self.instance.creator = input_user
             return super(PublicationModelForm, self).save(*args, **kwargs)
