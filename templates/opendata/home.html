@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="jumbotron">
+        <h1>
+            <font color="red">NAT</font> Meter
+        </h1>
+
+        <h3>{% trans "home.intro" %}</h3>
+
+        <p>
+            {% trans "home.intro.p1" %}
+        </p>
+        <p>
+            {% trans "home.intro.p2" %}
+        </p>
+    </div>
+
+    <div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
+            <h2>{% trans "home.objectives" %}</h2>
+            <p>{% trans "home.objectives.p1" %}</p>
+        </div>
+
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
+            <h2>{% trans "home.diagram" %}</h2>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
+            <a href=""><h2>{% trans "home.charts" %}</h2></a>
+            <p>{% trans "home.charts.p1" %}</p>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
+            <a href="" alt="Demostración del script.">
+                <h2>{% trans "home.demo" %}</h2>
+            </a>
+
+            <p>{% trans "home.demo.p1" %}</p>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
+            <h2>{% trans "home.data" %}</h2>
+            <p>
+                {% trans "home.data.body" %}
+            </p>
+
+            <ul>
+                <li>
+                {% blocktrans trimmed %}
+                    Experiment's <a href="">raw data</a>
+                {% endblocktrans %}
+                </li>
+                <li>{% trans "home.data.ul.l2" %}</li>
+            </ul>
+        </div>
+
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <h2>{% trans "home.mechanism" %}</h2>
+            <p>
+                {% trans "home.mechanism.p1" %}
+            </p>
+            <p>
+                {% trans "home.mechanism.p2" %}
+            </p>
+        </div>
+
+    </div>
+{% endblock %}

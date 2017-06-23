@@ -97,6 +97,10 @@ TIME_ZONE = 'America/Montevideo'
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+# Go fetch static files inside each app
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "opendata/static")
+]
 
 # Database
 DATABASES = {
