@@ -32,12 +32,12 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
 
     <!-- Progress bar -->
-    <link rel='stylesheet' href='//cdn.dev.lacnic.net/mprogress.css'/>
-    <script src='//cdn.dev.lacnic.net/mprogress.js'></script>
+{#    <link rel='stylesheet' href='//cdn.dev.lacnic.net/mprogress.css'/>#}
+{#    <script src='//cdn.dev.lacnic.net/mprogress.js'></script>#}
 
     <link rel="stylesheet" type="text/css" href="{% static "css/stun.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/lacniclabs-portales-negro.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/lacniclabs-override.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/lacniclabs-generico.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/lacniclabs-especifico.css" %}">
 
     <link type="image/x-icon" href="{% static "imgs/favicon-r.ico" %}" rel="shortcut icon">
     <link rel="apple-touch-icon" href="{% static "imgs/favicon-r.ico" %}">
@@ -139,15 +139,15 @@
     </ul>
 
     <ul id="setlang" class="nav navbar-nav navbar-right" style="margin-right: 1em; margin-left: 1em;">
-        <li><a href="#" onclick="langRedirect('en');">EN</a></li>
-        <li><a href="#" onclick="langRedirect('es');">ES</a></li>
-        <li>
-            <span
-                    class="glyphicon glyphicon-info-sign"
-                    data-toggle="tooltip"
-                    title="{% trans "bar.secondary.cookie" %}"
-            ></span>
-        </li>
+{#        <li><a href="#" onclick="langRedirect('en');">EN</a></li>#}
+{#        <li><a href="#" onclick="langRedirect('es');">ES</a></li>#}
+{#        <li>#}
+{#            <span#}
+{#                    class="glyphicon glyphicon-info-sign"#}
+{#                    data-toggle="tooltip"#}
+{#                    title="{% trans "bar.secondary.cookie" %}"#}
+{#            ></span>#}
+{#        </li>#}
         <!-- Material Design loading component -->
         <div
                 id="setlang-progress"
@@ -175,17 +175,11 @@
 
 </div>
 
-<footer class="row" style="background-color: #C4ABA2 ; padding: 1em;">
-
-    <div class="col-sm-3 col-md-3 col-lg-3">
-        <a href="https://www.labs.lacnic.net/">
-            <img src="{% static "imgs/logos/logo_labs_foot.png" %}" class="hidden-xs center-block"
-                 title="LACNIC labs"/>
-            <img src="{% static "imgs/logos/logo_labs_foot.png" %}" class="visible-xs center-block"
-                 title="LACNIC labs"/>
-        </a>
-    </div>
-
+<footer style="height: 94pt">
+    <img src="{% static "imgs/logos/logo_labs_foot.png" %}"
+         class="hidden-xs center-block"
+         title="LACNIC labs"
+    />
 </footer>
 
 <!-- 		Analytics -->
@@ -206,11 +200,11 @@
     ga('send', 'pageview');
 </script>
 
-<script>
-    var mprogress3 = new Mprogress({
-        template: 3,
-        parent: '#setlang-progress'
-    });
-</script>
+{#<script>#}
+{#    var mprogress3 = new Mprogress({#}
+{#        template: 3,#}
+{#        parent: '#setlang-progress'#}
+{#    });#}
+{#</script>#}
 </body>
 </html>
