@@ -2,71 +2,69 @@
 {% load staticfiles %}
 {% load i18n %}
 
+
 {% block content %}
 
     <div class="jumbotron">
         <h1>
-            <font color="red">NAT</font> Meter
+            <font color="red">OPEN Data</font>
         </h1>
 
-        <h3>{% trans "home.intro" %}</h3>
+        <h3>Acceso a datos sobre recursos de Internet relevados por LACNIC</h3>
 
         <p>
-            {% trans "home.intro.p1" %}
+            some text
         </p>
         <p>
-            {% trans "home.intro.p2" %}
+            some other text
         </p>
     </div>
 
     <div>
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
-            <h2>{% trans "home.objectives" %}</h2>
-            <p>{% trans "home.objectives.p1" %}</p>
+            <h2>Categorías</h2>
+            <ul>
+                <li><a href="{% url "categoria" %}">Cat 1</a></li>
+                <li><a href="categoria.html">Cat 2</a></li>
+                <li><a href="categoria.html">Cat 3</a></li>
+                <li><a href="categoria.html">Cat 4</a></li>
+            </ul>
+
         </div>
+
+
 
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
-            <h2>{% trans "home.diagram" %}</h2>
+            <a href="#"><h2> Grafica 1</h2></a>
+            <img src="http://www.ingeniovirtual.com/wp-content/uploads/grafico-de-sectores-circular.jpg">
         </div>
 
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
-            <a href=""><h2>{% trans "home.charts" %}</h2></a>
-            <p>{% trans "home.charts.p1" %}</p>
-        </div>
-
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
-            <a href="" alt="Demostración del script.">
-                <h2>{% trans "home.demo" %}</h2>
-            </a>
-
-            <p>{% trans "home.demo.p1" %}</p>
-        </div>
-
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
-            <h2>{% trans "home.data" %}</h2>
-            <p>
-                {% trans "home.data.body" %}
-            </p>
-
+            <h2>Lo más visto</h2>
             <ul>
-                <li>
-                {% blocktrans trimmed %}
-                    Experiment's <a href="">raw data</a>
-                {% endblocktrans %}
-                </li>
-                <li>{% trans "home.data.ul.l2" %}</li>
+                <li><a href="#">Data 1</a></li>
+                <li><a href="#">Data 2</a></li>
+                <li><a href="#">Data 3</a></li>
+                <li><a href="#">Data 4</a></li>
             </ul>
         </div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <h2>{% trans "home.mechanism" %}</h2>
-            <p>
-                {% trans "home.mechanism.p1" %}
-            </p>
-            <p>
-                {% trans "home.mechanism.p2" %}
-            </p>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
+            <h2>Recientemente agregado</h2>
+            <ul>
+                <li><a href="#">Data 1</a></li>
+                <li><a href="#">Data 2</a></li>
+                <li><a href="#">Data 3</a></li>
+                <li><a href="#">Data 4</a></li>
+            </ul>
+
         </div>
+
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
+            <a href="#"><h2>Grafica 2</h2></a>
+            <img src="http://wiki.open-office.es/images/a/a2/Calc.33x.17.000.png">
+        </div>
+
 
     </div>
 {% endblock %}
