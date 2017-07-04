@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+{% block content %}
+
+
+    <div>
+        <h1>Titulo del dato</h1>
+        <p>descripcion del dato</p>
+
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float:left;">
+            <h2>Vista grafica</h2>
+            <img src="http://wiki.open-office.es/images/a/a2/Calc.33x.17.000.png">
+
+
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
+
+            <h3>Descarga</h3>
+            <p>csv  json</p>
+        </div>
+
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
+            <h2>Metadata</h2>
+            <table>
+                <tr>
+                    <th>Fuentes de datos</th>
+                    <td>FTP, RIS</td>
+                </tr>
+                <tr>
+                    <th>Actualización</th>
+                    <td>Diaria</td>
+                </tr>
+                <tr>
+                    <th>Antiguedad</th>
+                    <td>2014-05-01</td>
+                </tr>
+                <tr>
+                    <th>Responsalbe</th>
+                    <td>Agustin</td>
+                </tr>
+                <tr>
+                    <th>TAGs</th>
+                    <td>IPv6, DNS</td>
+                </tr>
+                <tr>
+                    <th>Ultima actualización</th>
+                    <td>2017-06-27</td>
+                </tr>
+                <tr>
+                    <th>Punto de contacto</th>
+                    <td>agustin@lacnic.net</td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+{% endblock %}
