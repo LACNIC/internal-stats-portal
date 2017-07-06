@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "../base.html" %}
 {% load staticfiles %}
 {% load i18n %}
 
@@ -7,7 +7,7 @@
 
     <div class="jumbotron">
         <h1>
-            <font color="red">OPEN Data</font>
+            Open <font>Data</font>
         </h1>
 
         <h3>Acceso a datos sobre recursos de Internet relevados por LACNIC</h3>
@@ -33,10 +33,10 @@
         </div>
 
 
-
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
             <a href="{% url "dato" %}"><h2> Grafica 1</h2></a>
-            <img src="http://www.ingeniovirtual.com/wp-content/uploads/grafico-de-sectores-circular.jpg">
+            <div id="chart_test"></div>
+{#            <img src="http://www.ingeniovirtual.com/wp-content/uploads/grafico-de-sectores-circular.jpg">#}
         </div>
 
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
@@ -62,9 +62,37 @@
 
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
             <a href="{% url "dato" %}"><h2>Grafica 2</h2></a>
-            <img src="http://wiki.open-office.es/images/a/a2/Calc.33x.17.000.png">
+            <div id="chart_test2"></div>
+{#            <img src="http://wiki.open-office.es/images/a/a2/Calc.33x.17.000.png">#}
         </div>
 
 
     </div>
+
+    <script>
+
+        CHARTS.draw({
+            x: [1, 2, 3],
+            xType: 'string',
+            labels: ['Facebook', 'Twitter', 'LinkedIn'],
+            kind: 'PieChart',
+            divId: 'chart_test',
+            colors: ['#3b5998', '#55acee', '#007bb5']
+        });
+
+        CHARTS.draw({
+            x: [1, 2, 3],
+            xType: 'string',
+            labels: ['Facebook', 'Twitter', 'LinkedIn'],
+            kind: 'PieChart',
+            divId: 'chart_test2',
+            colors: ['#3b5998', '#55acee', '#007bb5']
+        });
+
+    </script>
+{% endblock %}
+
+{% block afterbody %}
+
+
 {% endblock %}
