@@ -7,13 +7,13 @@
 
 
     <div>
-        <h1>Categoria: {{ categoria }}</h1>
+        <h1>Datos sobre {{ categoria }}</h1>
 
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float:left;">
             <ul>
                 {% for p in pubs %}
                     <li>
-                        <a href="{% url "dato" %}">{{ p.name }}</a>
+                        <a href="{% url "dato" %}{{ p.name }}">{{ p.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -22,19 +22,13 @@
 
 
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
-            <h2>Relacionadas</h2>
+            <h3>Categorías Relacionadas</h3>
             <ul>
 
-                {% for p in pubs %}
-                    {% for tag in p.tags.all %}
-
-                        {% if tag != categoria %}
-                            <li>
-                                <a href="{% url "categoria" %}{{ tag }}">{{ tag }}</a>
-                            </li>
-                        {% endif %}
-
-                    {% endfor %}
+                {% for tag in rel %}
+                    <li>
+                        <a href="{% url "categoria" %}{{ tag }}">{{ tag }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         </div>

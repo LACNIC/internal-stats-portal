@@ -77,12 +77,12 @@ class Category(Model):
 class Publication(Model):
     PROGRAMMING_LANGUAGE_CHOICES = sorted(
         [(item[1][0], item[0]) for item in get_all_lexers() if item[1]])
-    MINUTES = 'mins'
-    HOURS = 'hours'
-    DAYS = 'days'
-    WEEKS = 'weeks'
-    MONTHS = 'months'
-    YEARS = 'years'
+    MINUTES = 'minutos'
+    HOURS = 'horas'
+    DAYS = 'días'
+    WEEKS = 'semanas'
+    MONTHS = 'meses'
+    YEARS = 'años'
     UPDATE_TYPE_CHOICES = (
         (MINUTES, 'Minuto/s'),
         (HOURS, 'Hora/s'),
