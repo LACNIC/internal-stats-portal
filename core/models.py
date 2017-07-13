@@ -114,6 +114,7 @@ class Publication(Model):
                                 blank=True)
     server_path = URLField('ruta al servidor', blank=True, null=True)  # Informational only field
     file_path = CharField('ruta a los datos', blank=True, max_length=200)
+    file_format = CharField('formato de los datos', blank=True, max_length=4)
     graph_path = CharField('ruta al gráfico', max_length=200, blank=True,
                            null=True)  # Auxiliary field (doesn't contain data)
     publishable = BooleanField('publicable', default=False)
@@ -214,6 +215,8 @@ class Publication(Model):
                 d,
                 bulk=False  # Save automatically
             )
+
+            return d
 
     def get_data(self):
         return Data.objects.get_most_recent_data(publication=self)

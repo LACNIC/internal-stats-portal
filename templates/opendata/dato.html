@@ -21,7 +21,12 @@
 
             <h2>Descarga</h2>
             <h4>Formatos disponibles</h4>
-            <p>csv  json</p>
+            <p>
+                {%  static file as file_url %}
+                {%  blocktrans trimmed %}
+                    <a href="{{ file_url }}" download>json</a>
+                {% endblocktrans %}
+            </p>
         </div>
 
 

@@ -64,7 +64,8 @@ def dato(request, name=''):
             tags = tags + str(tag)
         else:
             tags = tags + ', ' + str(tag)
-    dato = publicacion.get_data().data
+    ts_dato = publicacion.get_data().timestamp
+    file_name = publicacion.name + '-' + str(ts_dato.date()) + '.' + publicacion.file_format
 
     return render(
         request,
@@ -73,6 +74,6 @@ def dato(request, name=''):
             'nombre' : name,
             'pub' : publicacion,
             'tags' : tags,
-            'dato' : dato
+            'file' : file_name
         }
     )
