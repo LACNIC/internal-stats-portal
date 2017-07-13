@@ -15,6 +15,10 @@ def home(request):
     for p in publicaciones:
         if p.programming_language == "python":
             mas_vistas.append(p)
+    categorias = []
+    for p in publicaciones:
+        for i in p.tags.all():
+            categorias.append(i)
 
     return render(
         request,
@@ -22,7 +26,8 @@ def home(request):
         context={
             'pubs' : publicaciones,
             'recent' : recientes,
-            'most' : mas_vistas
+            'most' : mas_vistas,
+            'cat' : set(categorias)
         }
     )
 
@@ -53,14 +58,21 @@ def busqueda(request):
 
 def dato(request, name=''):
     publicacion = Publication.objects.get(name=name)
-    cant_tags = len(publicacion.tags.all())
+    tags = ''
+    for tag in publicacion.tags.all():
+        if tags == '':
+            tags = tags + str(tag)
+        else:
+            tags = tags + ', ' + str(tag)
+    dato = publicacion.get_data().data
 
     return render(
         request,
         "opendata/dato.html",
         context={
-            'nombre': name,
-            'pub': publicacion,
-            'n_tags': cant_tags+1
+            'nombre' : name,
+            'pub' : publicacion,
+            'tags' : tags,
+            'dato' : dato
         }
     )

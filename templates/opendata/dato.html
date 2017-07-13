@@ -20,12 +20,13 @@
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5" style="float:left;">
 
             <h2>Descarga</h2>
+            <h4>Formatos disponibles</h4>
             <p>csv  json</p>
         </div>
 
 
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5" style="float:left;">
-            <h2>Metadata</h2>
+            <h2>Detalle</h2>
             <table class="table">
                 <tr>
                     <th>Fuentes de datos</th>
@@ -48,10 +49,8 @@
                     {% endfor %}
                 </tr>
                 <tr>
-                    <th rowspan= {{ n_tags }} >TAGs</th>
-                    {%  for tag in pub.tags.all %}
-                        <tr><td>{{ tag }}</td></tr>
-                    {% endfor %}
+                    <th>TAGs</th>
+                    <td>{{ tags }}</td>
                 </tr>
                 <tr>
                     <th>Ultima actualización</th>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DataSource, Database, Tag, Publication, Category
+from .models import DataSource, Database, Tag, Publication, Category, Data
 from .forms import publication_model_form_factory
 
 
@@ -71,9 +71,13 @@ class PublicationAdmin(admin.ModelAdmin):
 
     actions = [fetch_remote_data]
 
+class DataAdmin(admin.ModelAdmin):
+    pass
+
 
 admin.site.register(DataSource, DataSourceAdmin)
 admin.site.register(Database, DatabaseAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Publication, PublicationAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Data, DataAdmin)
