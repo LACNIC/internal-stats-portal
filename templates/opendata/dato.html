@@ -24,7 +24,7 @@
             <p>
                 {%  static file as file_url %}
                 {%  blocktrans trimmed %}
-                    <a href="{{ file_url }}" download>json</a>
+                    <a href="{{ file_url }}" download>{{ format }}</a>
                 {% endblocktrans %}
             </p>
         </div>
@@ -55,7 +55,11 @@
                 </tr>
                 <tr>
                     <th>TAGs</th>
-                    <td>{{ tags }}</td>
+                <td>
+                    {% for tag in tags %}
+                        <a href="{% url "categoria" %}{{ tag }}">{{ tag }}</a>
+                    {% endfor %}
+                </td>
                 </tr>
                 <tr>
                     <th>Ultima actualización</th>

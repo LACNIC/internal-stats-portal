@@ -25,8 +25,8 @@ def home(request):
         "opendata/home.html",
         context={
             'pubs' : publicaciones,
-            'recent' : recientes,
-            'most' : mas_vistas,
+            'recent' : recientes[0:4],
+            'most' : mas_vistas[0:4],
             'cat' : set(categorias)
         }
     )
@@ -53,14 +53,16 @@ def categoria(request, tag=''):
 
 def dato(request, name=''):
     publicacion = Publication.objects.get(name=name)
-    tags = ''
+    tags = []
     for tag in publicacion.tags.all():
-        if tags == '':
-            tags = tags + str(tag)
-        else:
-            tags = tags + ', ' + str(tag)
+        tags.append(tag)
+        # if tags == '':
+        #     tags = tags + str(tag)
+        # else:
+        #     tags = tags + ', ' + str(tag)
     ts_dato = publicacion.get_data().timestamp
-    file_name = "data/" + publicacion.name + '-' + str(ts_dato.date()) + '.' + publicacion.file_format
+    file_name = "data/" + publicacion.name.replace(" ", "_").lower() + '-' + str(ts_dato.date()) + '.' + publicacion.file_format
+    format = publicacion.file_format
 
     return render(
         request,
@@ -69,7 +71,8 @@ def dato(request, name=''):
             'nombre' : name,
             'pub' : publicacion,
             'tags' : tags,
-            'file' : file_name
+            'file' : file_name,
+            'format' : format
         }
     )
 
