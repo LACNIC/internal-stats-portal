@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 
-from views import home, categoria, busqueda, dato
+from views import home, categoria, search, dato
 
 urlpatterns = [
                   url(r'^$', home, name='home'),
@@ -10,7 +10,7 @@ urlpatterns = [
                   url(r'^categoria/$', categoria, name='categoria'),  # no cambiar el orden, no sacar el $
                   url(r'^categoria/(?P<tag>\w+)?', categoria, name='categoria'),
 
-                  url(r'^busqueda', busqueda, name='busqueda'),
+                  url(r'^busqueda/$', search, name='search'),
 
                   url(r'^dato/$', dato, name='dato'),
                   url(r'^dato/(?P<name>[\w ]+)?', dato, name='dato')

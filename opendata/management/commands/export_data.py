@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
         for p in publications:
             nombre = p.name
-            d = p.fetch_remote_data().data
+            d = p.fetch_remote_data().data # hace el save
             formato = p.file_format
-            f = open(STATIC_OPENDATA_ROOT + '/'+nombre+'-'+str(now)+'.'+formato, 'wb')
+            f = open(STATIC_OPENDATA_ROOT + '/data/'+nombre+'-'+str(now)+'.'+formato, 'wb')
             f.write(d)

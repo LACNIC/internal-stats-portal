@@ -40,7 +40,6 @@ def categoria(request, tag=''):
             if str(t) != str(tag):
                 related_tags.append(t)
 
-
     return render(
         request,
         "opendata/categoria.html",
@@ -52,10 +51,6 @@ def categoria(request, tag=''):
     )
 
 
-def busqueda(request):
-    return render(request, "opendata/busqueda.html")
-
-
 def dato(request, name=''):
     publicacion = Publication.objects.get(name=name)
     tags = ''
@@ -65,7 +60,7 @@ def dato(request, name=''):
         else:
             tags = tags + ', ' + str(tag)
     ts_dato = publicacion.get_data().timestamp
-    file_name = publicacion.name + '-' + str(ts_dato.date()) + '.' + publicacion.file_format
+    file_name = "data/" + publicacion.name + '-' + str(ts_dato.date()) + '.' + publicacion.file_format
 
     return render(
         request,
@@ -75,5 +70,19 @@ def dato(request, name=''):
             'pub' : publicacion,
             'tags' : tags,
             'file' : file_name
+        }
+    )
+
+def search(request):
+    q = request.GET.get('q')
+    datos = Publication.objects.filter(name__search=q)
+    cats = Tag.objects.filter(name__search=q)
+
+    return render(
+        request,
+        'opendata/busqueda.html',
+        context={
+            'datos' : datos,
+            'categorias' : cats
         }
     )
