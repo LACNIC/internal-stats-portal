@@ -259,7 +259,7 @@ class Data(Model):
         default='0.0',
         max_length=20
     )
-    publication = ForeignKey(Publication)
+    publication = ForeignKey(Publication, default=1)
 
     objects = DataManager()
 
