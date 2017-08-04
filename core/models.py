@@ -198,6 +198,8 @@ class Publication(Model):
                 requests_ftp.monkeypatch_session()
                 s = requests.Session()
                 response = s.get(self.file_path).text
+            else:
+                return None
 
             datas = self.data_set.all().order_by('-timestamp')
             # First Data for this Publication...
