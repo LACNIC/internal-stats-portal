@@ -2,16 +2,19 @@
 {% load staticfiles %}
 {% load i18n %}
 
+{% block title %}Dato: {{ nombre }}{% endblock %}
+
 
 {% block content %}
 
 
-    <div>
-        <h1><font>{{ nombre }}</font></h1>
+    <div class="container">
+        <h1 class="page-header"><font>{{ nombre }}</font></h1>
+
         <p>{{ pub.description }}</p>
 
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7" style="float:left;">
-            <h2>Vista grafica</h2>
+            <h2>Vista gráfica</h2>
             <div id="chart_test_dato"></div>
 
 
@@ -22,9 +25,11 @@
             <h2>Descarga</h2>
             <h4>Formatos disponibles</h4>
             <p>
-                {%  static file as file_url %}
-                {%  blocktrans trimmed %}
-                    <a href="{{ file_url }}" download>{{ format }}</a>
+                {% static file as file_url %}
+                {% blocktrans trimmed %}
+                    <span class="label label-info category-tag">
+                        <a class="category-tag" href="{{ file_url }}" download>{{ format }}</a>
+                    </span>
                 {% endblocktrans %}
             </p>
         </div>
@@ -49,17 +54,19 @@
                 </tr>
                 <tr>
                     <th>Responsable</th>
-                    {%  for resp in pub.responsibles.all %}
+                    {% for resp in pub.responsibles.all %}
                         <td>{{ resp }}</td>
                     {% endfor %}
                 </tr>
                 <tr>
                     <th>TAGs</th>
-                <td>
-                    {% for tag in tags %}
-                        <a href="{% url "categoria" %}{{ tag }}">{{ tag }}</a>
-                    {% endfor %}
-                </td>
+                    <td>
+                        {% for tag in tags %}
+                            <span class="label label-primary category-tag">
+                            <a href="{% url "categoria" %}{{ tag }}" class="category-tag">{{ tag }}</a>
+                        </span>
+                        {% endfor %}
+                    </td>
                 </tr>
                 <tr>
                     <th>Ultima actualización</th>
@@ -68,6 +75,10 @@
                 <tr>
                     <th>Punto de contacto</th>
                     <td>lacnic@lacnic.net</td>
+{#                    <form>#}
+{#                        Form captcha#}
+{#                        <div class="g-recaptcha" data-sitekey="6LcQ1y0UAAAAAH1GQ2m8bOnVKSrG6phw5ApFa2k6"></div>#}
+{#                    </form>#}
                 </tr>
             </table>
         </div>

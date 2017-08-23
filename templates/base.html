@@ -14,7 +14,7 @@
     <meta name="description"
           content="Midiendo la penetración de NAT en América Latina y Caribe a través de servicios ICE / TURN."/>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>{% block title %}Inicio{% endblock %} - Open Data</title>
+    <title>{% block title %}{% endblock %} - Open Data LACNIC</title>
 
     <!-- Google Fonts -->
     {#    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:100">#}
@@ -37,6 +37,7 @@
 
     <link rel="stylesheet" type="text/css" href="{% static "css/lacniclabs-generico.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/lacniclabs-especifico.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/opendata.css" %}">
 
     <link type="image/x-icon" href="{% static "imgs/favicon-c.ico" %}" rel="shortcut icon">
     <link rel="apple-touch-icon" href="{% static "imgs/favicon-c.ico" %}">
@@ -49,6 +50,8 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+    <!-- Google Captcha -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     {% block headers %}
     {% endblock %}
 
@@ -168,14 +171,14 @@
 {#Barra anaranjada#}
 <div id="barra-primaria" class="navbar">
 
-    <a href="https://www.labs.lacnic.net" title="LACNIC labs" class="pull-left">
+    <a href="https://www.labs.lacnic.net" title="LACNIC labs" class="pull-right">
         <img src="{% static 'imgs/logos/logo_labs.png' %}" border="0" class="hidden-xs"
              alt="LACNIC Labs" style="max-height: 5em;"/>
         <img src="{% static 'imgs/logos/logo_labs_small.png' %}" border="0" class="visible-xs"
              alt="LACNIC Labs" style="max-height: 3em;"/>
     </a>
 
-    <a id="titulo-primario" class="navbar-brand pull-right" href="{% url 'home' %}">
+    <a id="titulo-primario" class="navbar-brand pull-left" href="{% url 'home' %}">
         <h2>
             Open Data
         </h2>

@@ -1,0 +1,13 @@
+a.category-tag {
+    color: white;
+    /*margin-right: .5em;*/
+}
+
+a.category-tag:hover {
+    text-decoration: none;
+    color: white;
+}
+
+span.category-tag {
+    margin-right: 1em;
+}

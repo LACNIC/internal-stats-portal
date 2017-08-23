@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
+{% block title %}Inicio{% endblock %}
 
 {% block content %}
 
@@ -13,10 +14,12 @@
         <h3>Acceso a datos sobre recursos de Internet relevados por LACNIC</h3>
 
         <p>
-            Este portal está dedicado a mostrar y disponibilizar datasets generados por LACNIC de diversos ámbitos a modo experimental o de estadíticas generales sobre los recursos asignados en la región.
+            Este portal está dedicado a mostrar y disponibilizar datasets generados por LACNIC de diversos ámbitos a
+            modo experimental o de estadíticas generales sobre los recursos asignados en la región.
         </p>
         <p>
-            Es un portal de uso público que brinda la posibilidad de descargar los datos descriptos en formatos estándar para uso personal.
+            Es un portal de uso público que brinda la posibilidad de descargar los datos descriptos en formatos estándar
+            para uso personal.
         </p>
     </div>
 
@@ -35,7 +38,7 @@
         </div>
 
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-4">
             <a href="{% url "dato" %}test"><h2> test </h2></a>
             <div id="chart_test"></div>
         </div>
@@ -56,18 +59,28 @@
             <ul>
                 {% for p in recent %}
 
-                            <li>
-                                <a href="{% url "dato" %}{{ p.name }}">{{ p.name }}</a>
-                            </li>
+                    <li>
+                        <a href="{% url "dato" %}{{ p.name }}">{{ p.name }}</a>
+                    </li>
 
                 {% endfor %}
             </ul>
 
         </div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-4" style="float: right;">
             <a href="{% url "dato" %}agotamiento ipv4 fase 2"><h2> agotamiento ipv4 fase 2 </h2></a>
             <div id="chart_test2"></div>
+        </div>
+
+        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-4" style="float: right;">
+            <a href="{% url "dato" %}agotamiento ipv4 fase 2"><h2> agotamiento ipv4 fase 2 </h2></a>
+            <div id="chart_test3"></div>
+        </div>
+
+        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-4" style="float: right;">
+            <a href="{% url "dato" %}agotamiento ipv4 fase 2"><h2> agotamiento ipv4 fase 2 </h2></a>
+            <div id="chart_test4"></div>
         </div>
 
 
@@ -102,6 +115,38 @@
             labels: ['Facebook', 'Twitter', 'LinkedIn'],
             kind: 'PieChart',
             divId: 'chart_test2',
+            colors: ['3b5998', '55acee', '007bb5'],
+            my_options: {
+                height: 250,
+                chartArea: {
+                    top: "10",
+                    bottom: "20"
+                }
+            }
+        });
+
+        CHARTS.draw({
+            x: [1, 2, 3],
+            xType: 'string',
+            labels: ['Facebook', 'Twitter', 'LinkedIn'],
+            kind: 'PieChart',
+            divId: 'chart_test3',
+            colors: ['3b5998', '55acee', '007bb5'],
+            my_options: {
+                height: 250,
+                chartArea: {
+                    top: "10",
+                    bottom: "20"
+                }
+            }
+        });
+
+        CHARTS.draw({
+            x: [1, 2, 3],
+            xType: 'string',
+            labels: ['Facebook', 'Twitter', 'LinkedIn'],
+            kind: 'PieChart',
+            divId: 'chart_test4',
             colors: ['3b5998', '55acee', '007bb5'],
             my_options: {
                 height: 250,
