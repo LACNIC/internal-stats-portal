@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% load redirect %}
 
 {% block title %}Dato: {{ nombre }}{% endblock %}
 
@@ -28,12 +29,16 @@
             <h2>Descarga</h2>
             <h4>Formatos disponibles</h4>
             <p>
+
+
                 {% static file as file_url %}
-                {% blocktrans trimmed %}
-                    <span class="label label-info category-tag">
-                        <a class="category-tag" href="{{ file_url }}" download>{{ format }}</a>
-                    </span>
-                {% endblocktrans %}
+                {% with file_url|redirect as redirect_url %}
+                    {% blocktrans trimmed %}
+                        <span class="label label-info category-tag">
+                            <a class="category-tag" href="{{ redirect_url }}" download>{{ format }}</a>
+                        </span>
+                    {% endblocktrans %}
+                {% endwith %}
             </p>
         </div>
 
