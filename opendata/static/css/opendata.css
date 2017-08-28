@@ -34,3 +34,9 @@ input[type=text] {
 input[type=text]:focus {
     width: 300px;
 }
+
+#leftpanel div{
+    float:left;
+    width:100%;
+    display:block;
+}
