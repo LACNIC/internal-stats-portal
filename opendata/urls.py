@@ -2,10 +2,12 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 
-from views import home, categoria, search, dato
+from views import home, categoria, search, dato, redirect
 
 urlpatterns = [
                   url(r'^$', home, name='home'),
+
+                  url(r'^redirect/', redirect, name='redirect'),
 
                   url(r'^categoria/$', categoria, name='categoria'),  # no cambiar el orden, no sacar el $
                   url(r'^categoria/(?P<tag>\w+)?', categoria, name='categoria'),
