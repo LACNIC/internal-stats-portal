@@ -107,7 +107,12 @@ def redirect(request):
     redirect_to = redirect_from.replace('/redirect/', '/static/')
 
     filename = redirect_from.split('/')[-1].split('.')[0].split('-')[0]
-    pub = Publication.objects.get(name=filename)
+
+    pub = None
+    for p in Publication.objects.all():
+        if filename == p.get_filename():
+            pub = p
+            break
 
     red = Redirect(
         redirect_from=redirect_from,
