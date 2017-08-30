@@ -221,6 +221,9 @@ class Publication(Model):
     def get_data(self):
         return Data.objects.get_most_recent_data(publication=self)
 
+    def get_filename(self):
+        return self.name.replace(" ", "_").lower()
+
     def __unicode__(self):
         return self.name
 
