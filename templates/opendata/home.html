@@ -85,6 +85,9 @@
             var s = fecha.slice(5,fecha.length);
             var d = s.split(", ");
             var mes = Number(d[1])+1;
+            if (mes < 10){
+                mes = "0"+ mes.toString();
+            }
             var date = d[0]+ "-" + mes + "-" +d[2];
             return date;
         }
@@ -95,20 +98,40 @@
             var y1 = [];
             var y2 = [];
 
+            var allocations = 0;
+            var announces = 0;
+            var aniomes = "";
+
             for (i = 0; i < rows.length; i++){
                 var fecha = parseDate(rows[i]['c'][0]['v']);
+                aniomes = fecha.slice(0,7)
+
                 var alloc = Number(rows[i]['c'][1]['v']);
                 var annou = Number(rows[i]['c'][2]['v']);
 
-                x.push(fecha)
-                y1.push(alloc)
-                y2.push(annou)
+                if (i+1 < rows.length){
+                    if (aniomes == parseDate(rows[i+1]['c'][0]['v']).slice(0,7)){
+                        allocations = allocations + alloc
+                        announces = announces + annou
+                    }else{
+                        x.push(aniomes+"-01")
+                        y1.push(allocations)
+                        y2.push(announces)
+                        allocations = 0;
+                        announces = 0;
+                    }
+                }
+
+
+{#                x.push(fecha)#}
+{#                y1.push(alloc)#}
+{#                y2.push(annou)#}
 
             }
 
             CHARTS.draw({
-                x: x.slice(1400,x.length),
-                ys: [y1.slice(1400,y1.length), y2.slice(1400,y2.length)],
+                x: x,
+                ys: [y1, y2],
                 labels: ['Allocated', 'Announced'],
                 kind: 'LineChart',
                 divId: 'chart_test',
