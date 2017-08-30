@@ -1,0 +1,42 @@
+a.category-tag {
+    color: white;
+    /*margin-right: .5em;*/
+}
+
+a.category-tag:hover {
+    text-decoration: none;
+    color: white;
+}
+
+span.category-tag {
+    margin-right: 1em;
+}
+
+input[type=text] {
+    width: 190px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.5em;
+    background-color: #E2FFFA;
+    /*background-image: url('https://www.w3schools.com/howto/searchicon.png');*/
+    /*background-position: 10px 10px;*/
+    /*background-repeat: no-repeat;*/
+    padding: 5px 5px 5px 5px;
+    -webkit-transition: width 0.25s ease-in-out;
+    transition: width 0.25s ease-in-out;
+
+    position:absolute;
+    top:0; right:0;
+}
+
+input[type=text]:focus {
+    width: 300px;
+}
+
+#leftpanel div{
+    float:left;
+    width:100%;
+    display:block;
+}
