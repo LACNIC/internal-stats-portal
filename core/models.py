@@ -131,7 +131,7 @@ class Publication(Model):
     )
 
     js_code = TextField(
-        name='JS code',
+        # 'JS code',
         verbose_name='JS code to draw the corresponding chart',
         blank=True,
         null=True
@@ -230,6 +230,9 @@ class Publication(Model):
 
     def get_filename(self):
         return self.name.replace(" ", "_").lower()
+
+    def get_chart_div_id(self):
+        return self.get_filename() + '_chart_div'
 
     def __unicode__(self):
         return self.name
