@@ -30,6 +30,7 @@ if socket.gethostname() == 'mvuy20':
     DEBUG = False
 
 ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     # internal-stats-portal apps
     'users',
     'core',
+    'corsheaders',
     'opendata'
 ]
 
