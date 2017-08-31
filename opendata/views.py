@@ -84,13 +84,15 @@ def search(request):
     q = request.GET.get('q')
     datos = Publication.objects.filter(name__search=q)
     cats = Tag.objects.filter(name__search=q)
+    desc = Publication.objects.filter(description__search=q)
 
     return render(
         request,
         'opendata/busqueda.html',
         context={
             'datos' : datos,
-            'categorias' : cats
+            'categorias' : cats,
+            'descripcion' : desc
         }
     )
 

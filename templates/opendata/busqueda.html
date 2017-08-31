@@ -38,6 +38,19 @@
             </ul>
         </div>
 
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="float:left;">
+            <h2>Descripciones</h2>
+            <ul>
+                {% if descripcion|length != 0 %}
+                    {% for desc in descripcion %}
+                        <li>{{ desc.description }} <br><a href="{% url "dato" %}{{ desc.name }}">{{ desc.name }}</a></li>
+                    {% endfor %}
+                {% else %}
+                    No results found
+                {% endif %}
+            </ul>
+        </div>
+
 
     </div>
 {% endblock %}
