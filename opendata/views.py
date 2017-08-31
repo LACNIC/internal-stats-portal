@@ -72,7 +72,7 @@ def dato(request, name=''):
             'pub' : publicacion,
             'tags' : tags,
             'file' : file_name,
-            'format' : format
+            'format' : format,
             'ult_alt': ts_dato
         }
     )
@@ -90,3 +90,29 @@ def search(request):
             'categorias' : cats
         }
     )
+
+def redirect(request):
+    """
+    :param request:
+    :return: HTTP redirect to the static file
+    """
+
+    redirect_from = request.path_info
+    redirect_to = redirect_from.replace('/redirect/', '/static/')
+
+    filename = redirect_from.split('/')[-1].split('.')[0].split('-')[0]
+
+    pub = None
+    for p in Publication.objects.all():
+        if filename == p.get_filename():
+            pub = p
+            break
+
+    red = Redirect(
+        redirect_from=redirect_from,
+        redirect_to=redirect_to,
+        publication=pub
+    )
+    red.save()
+
+    return HttpResponseRedirect(redirect_to)
