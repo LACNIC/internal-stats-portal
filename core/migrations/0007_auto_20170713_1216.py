@@ -13,11 +13,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='publication',
-            name='file_format',
-            field=models.CharField(blank=True, max_length=4, verbose_name='formato de los datos'),
-        ),
         migrations.AlterField(
             model_name='publication',
             name='modified',

@@ -40,3 +40,12 @@ input[type=text]:focus {
     width:100%;
     display:block;
 }
+
+#no-data {
+    height: 3em;
+    min-height: 9em;
+    border-radius: 12px;
+    background-color: #f7f7f7;
+    text-align: center;
+    padding-top: 1.5em;
+}

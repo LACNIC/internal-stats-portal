@@ -130,6 +130,13 @@ class Publication(Model):
         related_name='%(class)s_category'
     )
 
+    js_code = TextField(
+        name='JS code',
+        verbose_name='JS code to draw the corresponding chart',
+        blank=True,
+        null=True
+    )
+
     def short_description(self):
         return truncate_text(self.description, 50)
 
