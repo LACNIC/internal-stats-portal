@@ -23,4 +23,12 @@ class Migration(migrations.Migration):
                 ('publication', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core.Publication')),
             ],
         ),
+
+        migrations.AddField(
+            model_name='publication',
+            name='file_format',
+            field=models.CharField(blank=True, max_length=4, verbose_name='formato de los datos'),
+        ),
     ]
+
+
