@@ -16,61 +16,79 @@
         <h3>Acceso a datos sobre recursos de Internet relevados por LACNIC</h3>
 
         <p>
-            Este portal está dedicado a mostrar y disponibilizar datasets generados por LACNIC de diversos ámbitos a modo experimental o de estadíticas generales sobre los recursos asignados en la región.
+            Este portal está dedicado a mostrar y disponibilizar datasets generados por LACNIC de diversos ámbitos a
+            modo experimental o de estadíticas generales sobre los recursos asignados en la región.
         </p>
         <p>
-            Es un portal de uso público que brinda la posibilidad de descargar los datos descriptos en formatos estándar para uso personal.
+            Es un portal de uso público que brinda la posibilidad de descargar los datos descriptos en formatos estándar
+            para uso personal.
         </p>
     </div>
 
     <div>
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
-            <h2>Categorías</h2>
-            <ul>
-                {% for c in cat %}
-                    <li>
-                        <a href="{% url "categoria" %}{{ c }}">{{ c }}</a>
-                    </li>
 
-                {% endfor %}
-            </ul>
+        <div id="leftpanel" class="col-xs-12 col-md-4">
+            <div style="float:left;">
+                <h2>Categorías</h2>
+                <ul>
+                    {% for c in cat %}
+                        <li>
+                            <a href="{% url "categoria" %}{{ c }}">{{ c }}</a>
+                        </li>
 
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+
+            <div style="float:left;">
+                <h2>Lo más visto</h2>
+                <ul>
+                    {% for p in most %}
+                        <li>
+                            <a href="{% url "dato" %}{{ p.name }}">{{ p.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div style="float:left;">
+                <h2>Recientemente agregado</h2>
+                <ul>
+                    {% for p in recent %}
+
+                        <li>
+                            <a href="{% url "dato" %}{{ p.name }}">{{ p.name }}</a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+
+            </div>
         </div>
 
+        <!-- Charts -->
+        <div class="col-xs-12 col-md-8">
+            <div class="col-xs-12 col-md-6">
+                <a href="{% url "dato" %}test"><h2> IPv6 Visibility </h2></a>
+                <div id="chart_test"></div>
+            </div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
-            <a href="{% url "dato" %}ipv6 visibility"><h2> IPv6 Visibility </h2></a>
-            <div id="chart_test"></div>
-        </div>
+            <div class="col-xs-12 col-md-6">
+                <a href="{% url "dato" %}agotamiento ipv4 fase 2"><h2> Available IPv4 Space </h2></a>
+                <div id="chart_test2"></div>
+            </div>
 
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
-            <h2>Lo más visto</h2>
-            <ul>
-                {% for p in most %}
-                    <li>
-                        <a href="{% url "dato" %}{{ p.name }}">{{ p.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+            <div class="col-xs-12 col-md-6">
+                <a href="{% url "dato" %}ipv6 visibility"><h2> Test 3 </h2></a>
+                <div id="chart_test3"></div>
+            </div>
 
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float:left;">
-            <h2>Recientemente agregado</h2>
-            <ul>
-                {% for p in recent %}
-
-                            <li>
-                                <a href="{% url "dato" %}{{ p.name }}">{{ p.name }}</a>
-                            </li>
-
-                {% endfor %}
-            </ul>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="float: right;">
-            <a href="{% url "dato" %}available ipv4 space"><h2> Available IPv4 Space </h2></a>
-            <div id="chart_test2"></div>
+            <div class="col-xs-12 col-md-6">
+                <a href="{% url "dato" %}available ipv4 space"><h2> Test 4 </h2></a>
+                <div id="chart_test4"></div>
+            </div>
         </div>
 
 
@@ -85,13 +103,13 @@
     <script>
 
         function parseDate(fecha) {
-            var s = fecha.slice(5,fecha.length);
+            var s = fecha.slice(5, fecha.length);
             var d = s.split(", ");
-            var mes = Number(d[1])+1;
-            if (mes < 10){
-                mes = "0"+ mes.toString();
+            var mes = Number(d[1]) + 1;
+            if (mes < 10) {
+                mes = "0" + mes.toString();
             }
-            var date = d[0]+ "-" + mes + "-" +d[2];
+            var date = d[0] + "-" + mes + "-" + d[2];
             return date;
         }
 
@@ -105,19 +123,19 @@
             var announces = 0;
             var aniomes = "";
 
-            for (i = 0; i < rows.length; i++){
+            for (i = 0; i < rows.length; i++) {
                 var fecha = parseDate(rows[i]['c'][0]['v']);
-                aniomes = fecha.slice(0,7)
+                aniomes = fecha.slice(0, 7)
 
                 var alloc = Number(rows[i]['c'][1]['v']);
                 var annou = Number(rows[i]['c'][2]['v']);
 
-                if (i+1 < rows.length){
-                    if (aniomes == parseDate(rows[i+1]['c'][0]['v']).slice(0,7)){
+                if (i + 1 < rows.length) {
+                    if (aniomes == parseDate(rows[i + 1]['c'][0]['v']).slice(0, 7)) {
                         allocations = allocations + alloc
                         announces = announces + annou
-                    }else{
-                        x.push(aniomes+"-01")
+                    } else {
+                        x.push(aniomes + "-01")
                         y1.push(allocations)
                         y2.push(announces)
                         allocations = 0;
@@ -126,9 +144,9 @@
                 }
 
 
-{#                x.push(fecha)#}
-{#                y1.push(alloc)#}
-{#                y2.push(annou)#}
+                {#                x.push(fecha)#}
+                {#                y1.push(alloc)#}
+                {#                y2.push(annou)#}
 
             }
 
@@ -155,7 +173,7 @@
             var x = [];
             var y = [];
 
-            for (i = 0; i < rows.length; i++){
+            for (i = 0; i < rows.length; i++) {
                 var fecha = parseDate(rows[i]['c'][0]['v']);
                 var valor = Number(rows[i]['c'][1]['v']);
                 x.push(fecha)
@@ -181,9 +199,17 @@
 
         }
 
-        fetch('http://localhost:8002/static/data/ipv6_visibility-2017-08-23.json').then( function(a){ return a.json()}).then(function(b){ chart_1(b)});
+        fetch('http://localhost:8003/static/data/ipv6_visibility-2017-08-23.json').then(function (a) {
+            return a.json()
+        }).then(function (b) {
+            chart_1(b)
+        });
 
-        fetch('http://localhost:8002/static/data/available_ipv4_space-2017-08-23.json').then( function(a){ return a.json()}).then(function(b){ chart_2(b)});
+        fetch('http://localhost:8003/static/data/available_ipv4_space-2017-08-23.json').then(function (a) {
+            return a.json()
+        }).then(function (b) {
+            chart_2(b)
+        });
 
         // se debe usar "localhost" para llamar al portal
 
