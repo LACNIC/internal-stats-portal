@@ -15,10 +15,11 @@ def home(request):
     for p in publicaciones:
         if (datetime.utcnow().replace(tzinfo=pytz.utc) - p.created).days <= 182:
             recientes.append(p)
-    mas_vistas = []
-    for p in publicaciones:
-        if p.programming_language == "python":
-            mas_vistas.append(p)
+
+    mas_vistas = Publication.objects.annotate(
+        count=Count('redirect__publication')
+    ).order_by('-count')[:4]
+
     categorias = []
     for p in publicaciones:
         for i in p.tags.all():
@@ -28,10 +29,10 @@ def home(request):
         request,
         "opendata/home.html",
         context={
-            'pubs' : publicaciones,
-            'recent' : recientes[0:4],
-            'most' : mas_vistas[0:4],
-            'cat' : set(categorias)
+            'pubs': publicaciones,
+            'recent': recientes[0:4],
+            'most': mas_vistas,
+            'cat': set(categorias)
         }
     )
 
@@ -50,7 +51,7 @@ def categoria(request, tag=''):
         context={
             'categoria': tag,
             'pubs': publicaciones,
-            'rel' : set(related_tags)
+            'rel': set(related_tags)
         }
     )
 
@@ -65,21 +66,23 @@ def dato(request, name=''):
         # else:
         #     tags = tags + ', ' + str(tag)
     ts_dato = publicacion.get_data().timestamp
-    file_name = "data/" + publicacion.name.replace(" ", "_").lower() + '-' + str(ts_dato.date()) + '.' + publicacion.file_format
+    file_name = "data/" + publicacion.name.replace(" ", "_").lower() + '-' + str(
+        ts_dato.date()) + '.' + publicacion.file_format
     format = publicacion.file_format
 
     return render(
         request,
         "opendata/dato.html",
         context={
-            'nombre' : name,
-            'pub' : publicacion,
-            'tags' : tags,
-            'file' : file_name,
-            'format' : format,
+            'nombre': name,
+            'pub': publicacion,
+            'tags': tags,
+            'file': file_name,
+            'format': format,
             'ult_alt': ts_dato
         }
     )
+
 
 def search(request):
     q = request.GET.get('q')
@@ -91,11 +94,12 @@ def search(request):
         request,
         'opendata/busqueda.html',
         context={
-            'datos' : datos,
-            'categorias' : cats,
-            'descripcion' : desc
+            'datos': datos,
+            'categorias': cats,
+            'descripcion': desc
         }
     )
+
 
 def redirect(request):
     """
