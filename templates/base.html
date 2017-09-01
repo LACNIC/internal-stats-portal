@@ -201,14 +201,12 @@
     <ul id="setlang" class="nav navbar-nav navbar-right" style="margin-right: 1em; margin-left: 1em;">
         <li>
             <form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
-{#                <button class="searchbutton" type="submit">#}
-{#                    <i class="fa fa-search"></i>#}
-{#                </button>#}
                 <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search...">
             </form>
         </li>
-        <li><a href="#" onclick="langRedirect('en');">EN</a></li>
-        <li><a href="#" onclick="langRedirect('es');">ES</a></li>
+{#        <li><a href="#" onclick="langRedirect('en');">EN</a></li>#}
+{#        <li><a href="#" onclick="langRedirect('es');">ES</a></li>#}
+        <li><a href="/admin">admin</a></li>
         <li>
             <span
                     class="glyphicon glyphicon-info-sign"
@@ -216,6 +214,7 @@
                     title="{% trans "bar.secondary.cookie" %}"
             ></span>
         </li>
+
         <!-- Material Design loading component -->
         <div
                 id="setlang-progress"
