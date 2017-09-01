@@ -28,6 +28,7 @@ SECRET_KEY = 'ravd+33&$3n9=6yuhua+0#uk2g!pfjag31#_k-&s2dcfh#-$0h'
 DEBUG = True
 if socket.gethostname() == 'mvuy20':
     DEBUG = False
+    ALLOWED_HOSTS = ['*']
 
 ADMINS = [
     ('Agustin Formoso', 'agustin@lacnic.net')
