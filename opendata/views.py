@@ -1,13 +1,12 @@
-from django.db.models import Count
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.views.decorators.cache import cache_page
 from core.models import *
 from opendata.models import *
 import pytz
 
 
-# Create your views here.
-
+@cache_page(60 * 15)
 def home(request):
     publicaciones = Publication.objects.all()
     recientes = []
