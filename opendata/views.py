@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.views.decorators.cache import cache_page
+# from django.views.decorators.cache import cache_page
 from core.models import *
 from opendata.models import *
 import pytz
