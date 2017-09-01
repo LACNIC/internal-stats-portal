@@ -6,7 +6,7 @@ from opendata.models import *
 import pytz
 
 
-@cache_page(60 * 15)
+# @cache_page(60 * 15)
 def home(request):
     publicaciones = Publication.objects.all()
     recientes = []
