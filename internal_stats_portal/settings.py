@@ -26,17 +26,21 @@ SECRET_KEY = 'ravd+33&$3n9=6yuhua+0#uk2g!pfjag31#_k-&s2dcfh#-$0h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
 if socket.gethostname() == 'mvuy20':
     DEBUG = False
     ALLOWED_HOSTS = ['*']
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_cache',
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'LOCATION': '/var/tmp/django_cache',
+        }
     }
-}
-
 
 ADMINS = [
     ('Agustin Formoso', 'agustin@lacnic.net')
