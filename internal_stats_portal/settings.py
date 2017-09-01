@@ -29,6 +29,10 @@ DEBUG = True
 if socket.gethostname() == 'mvuy20':
     DEBUG = False
 
+ADMINS = [
+    ('Agustin Formoso', 'agustin@lacnic.net')
+]
+
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
