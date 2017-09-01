@@ -33,7 +33,7 @@ CACHES = {
 }
 if socket.gethostname() == 'mvuy20':
     DEBUG = False
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['*', 'portaldedatos.dev.lacnic.net']
 
     CACHES = {
         'default': {

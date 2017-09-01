@@ -71,12 +71,12 @@
         <!-- Charts -->
         <div class="col-xs-12 col-md-8">
             <div class="col-xs-12 col-md-6">
-                <a href="{% url "dato" %}test"><h2> IPv6 Visibility </h2></a>
+                <a href="{% url "dato" %}test"><h2>Visibilidad IPv6</h2></a>
                 <div id="chart_test"></div>
             </div>
 
             <div class="col-xs-12 col-md-6">
-                <a href="{% url "dato" %}agotamiento ipv4 fase 2"><h2> Available IPv4 Space </h2></a>
+                <a href="{% url "dato" %}agotamiento ipv4 fase 2"><h2>Espacio IPv4 disponible</h2></a>
                 <div id="chart_test2"></div>
             </div>
 
@@ -177,11 +177,11 @@
             CHARTS.draw({
                 x: x,
                 ys: [y],
-                labels: ['IPv6 Nativo MX'],
+                labels: ['Espacio IPv4 disponible'],
                 kind: 'LineChart',
                 divId: 'chart_test2',
                 xType: 'date',
-                colors: ['blue'],
+                colors: ['#E53E2B'],
                 my_options: {
                     height: 300,
                     chartArea: {
