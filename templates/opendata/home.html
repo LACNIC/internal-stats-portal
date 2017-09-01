@@ -142,12 +142,6 @@
                         announces = 0;
                     }
                 }
-
-
-                {#                x.push(fecha)#}
-                {#                y1.push(alloc)#}
-                {#                y2.push(annou)#}
-
             }
 
             CHARTS.draw({
@@ -199,20 +193,17 @@
 
         }
 
-        fetch('http://localhost:8003/static/data/ipv6_visibility-2017-08-23.json').then(function (a) {
+        fetch('https://portaldedatos.dev.lacnic.net/static/data/asignaciones_vs_anuncios_visibles_ipv6-2017-09-01.json').then(function (a) {
             return a.json()
         }).then(function (b) {
             chart_1(b)
         });
 
-        fetch('http://localhost:8003/static/data/available_ipv4_space-2017-08-23.json').then(function (a) {
+        fetch('https://portaldedatos.dev.lacnic.net/static/data/available_ipv4_space-2017-08-23.json').then(function (a) {
             return a.json()
         }).then(function (b) {
             chart_2(b)
         });
-
-        // se debe usar "localhost" para llamar al portal
-
 
     </script>
 {% endblock %}

@@ -107,6 +107,7 @@
 
         // Global variable CHARTS
         // Accessible from child templates
+        // Queue until CHARTS object if fully functional
         var CHARTS = {
             queue: [],
             draw: function (chart) {
@@ -148,6 +149,8 @@
                     for (i in CHARTS.queue) {
                         ASYNC_CHARTS.draw(CHARTS.queue[i])
                     }
+                    // After unloading the queue, just replace for the new definition
+                    CHARTS = ASYNC_CHARTS;
                 }
 
 
