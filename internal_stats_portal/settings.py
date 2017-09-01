@@ -30,6 +30,14 @@ if socket.gethostname() == 'mvuy20':
     DEBUG = False
     ALLOWED_HOSTS = ['*']
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
+}
+
+
 ADMINS = [
     ('Agustin Formoso', 'agustin@lacnic.net')
 ]
