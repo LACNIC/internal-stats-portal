@@ -27,7 +27,7 @@
 
     <div>
 
-        <div id="leftpanel" class="col-xs-12 col-md-4">
+        <div id="leftpanel" class="col-xs-12 col-md-3">
             <div style="float:left;">
                 <h2>Categorías</h2>
                 <ul>
@@ -69,7 +69,7 @@
         </div>
 
         <!-- Charts -->
-        <div class="col-xs-12 col-md-8">
+        <div class="col-xs-12 col-md-9">
             <div class="col-xs-12 col-md-6">
                 <a href="{% url "dato" %}test"><h2>Visibilidad IPv6</h2></a>
                 <div id="chart_test"></div>
@@ -86,7 +86,7 @@
             </div>
 
             <div class="col-xs-12 col-md-6">
-                <a href="{% url "dato" %}available ipv4 space"><h2> Test 4 </h2></a>
+                <a href="{% url "dato" %}available ipv4 space"><h2> DSC data para IPv4  </h2></a>
                 <div id="chart_test4"></div>
             </div>
         </div>
@@ -147,13 +147,13 @@
             CHARTS.draw({
                 x: x,
                 ys: [y1, y2],
-                labels: ['Allocated', 'Announced'],
+                labels: ['Asignado', 'Anunciado'],
                 kind: 'LineChart',
                 divId: 'chart_test',
                 xType: 'date',
+                colors: ['C53425', '009DCA'],
                 my_options: {
                     height: 300,
-                    lineWidth: 3,
                     vAxis: {format: 'short', title: 'Direcciones IP'},
                     chartArea: {
                         left: "40",
@@ -183,11 +183,81 @@
                 kind: 'LineChart',
                 divId: 'chart_test2',
                 xType: 'date',
-                colors: ['E53E2B'],
+                colors: ['C53425'],
                 my_options: {
                     height: 300,
-                    lineWidth: 3,
                     vAxis: {format: 'short', title: 'Direcciones IP'},
+                    chartArea: {
+                        left: "100",
+                        top: "5"
+                    }
+                }
+            });
+
+        }
+
+        function chart_3(b) {
+            var datos = b['results'][0]['series'][0]['values'];
+
+            var x = [];
+            var y = [];
+
+            for (i = 0; i < datos.length; i++) {
+                var fecha = datos[i][0].split("T")[0];
+                var valor = Number(datos[i][1]);
+{#                console.log(fecha.split("T")[0])#}
+{#                console.log(valor)#}
+                x.push(fecha)
+                y.push(valor)
+            }
+
+            CHARTS.draw({
+                x: x.slice(x.length-200, x.length),
+                ys: [y.slice(y.length-200, y.length)],
+                labels: ['DSC data QType A'],
+                kind: 'LineChart',
+                divId: 'chart_test3',
+                xType: 'date',
+                colors: ['C53425'],
+                my_options: {
+                    height: 300,
+                    chartArea: {
+                        left: "100",
+                        top: "5"
+                    }
+                }
+            });
+
+        }
+
+        function chart_4(b) {
+            console.log(b[1])
+            var v4 = b[0]['results'][0]['series'][0]['values'];
+            var v6 = b[1]['results'][0]['series'][0]['values'];
+
+            var x = [];
+            var y4 = [];
+            var y6 = [];
+
+            for (i = 0; i < v4.length; i++) {
+                var fecha = v4[i][0].split("T")[0];
+                var valor4 = Number(v4[i][1]);
+                var valor6 = Number(v6[i][1]);
+                x.push(fecha)
+                y4.push(valor4)
+                y6.push(valor6)
+            }
+
+            CHARTS.draw({
+                x: x.slice(x.length-200, x.length),
+                ys: [y4.slice(y4.length-200, y4.length), y6.slice(y6.length-200, y6.length)],
+                labels: ['DSC data QType A', 'DSC data QType AAAA'],
+                kind: 'LineChart',
+                divId: 'chart_test4',
+                xType: 'date',
+                colors: ['C53425', '009DCA'],
+                my_options: {
+                    height: 300,
                     chartArea: {
                         left: "100",
                         top: "5"
@@ -207,6 +277,21 @@
             return a.json()
         }).then(function (b) {
             chart_2(b)
+        });
+
+        fetch('https://portaldedatos.dev.lacnic.net/dsc-data/dsc.qtype_a.server_dip6.1d.json').then(function (a) {
+            return a.json()
+        }).then(function (b) {
+            chart_3(b)
+        });
+
+        var urls = [fetch('https://portaldedatos.dev.lacnic.net/dsc-data/dsc.qtype_a.server_dip6.1d.json'), fetch('https://portaldedatos.dev.lacnic.net/dsc-data/dsc.qtype_aaaa.server_dip6.1d.json')]
+
+        Promise.all(urls).then(function (a){
+            var jsons = [a[0].json(), a[1].json()]
+            return Promise.all(jsons)
+        }).then(function (b){
+            chart_4(b)
         });
 
     </script>
