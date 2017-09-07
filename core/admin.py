@@ -17,12 +17,14 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
 
+
 class CategoryAdmin(admin.ModelAdmin):
     pass
 
+
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('name', 'short_description', 'creator', 'created',
-                    'modified', 'publishable', 'category',)
+                    'modified', 'publishable', 'category', 'data_size',)
     search_fields = ('name', 'description', 'creator__username', 'server_path',
                      'responsibles__username', 'tags__name',)
     list_filter = ('publishable', 'created', 'modified', 'tags', 'creator',
@@ -38,10 +40,15 @@ class PublicationAdmin(admin.ModelAdmin):
         fields = ('name', 'description', 'programming_language', 'data_sources',
                   ('update_value', 'update_type'), 'responsibles',
                   'databases', 'server_path', 'file_path', 'file_format', 'graph_path', 'publishable',
-                   'started', 'tags', 'category', 'js_code')  # 'created', 'modified'
+                  'started', 'tags', 'category', 'js_code')  # 'created', 'modified'
         if request.user.is_superuser:
             fields = ('creator',) + fields
         return fields
+
+    def data_size(self, obj):
+        return len(obj.get_data().data)
+
+    data_size.short_description = "Latest data size"
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
@@ -67,9 +74,11 @@ class PublicationAdmin(admin.ModelAdmin):
         for q in queryset:
             print q, q.file_path
             q.fetch_remote_data()
+
     fetch_remote_data.short_description = "Traer datos de URL externa"
 
     actions = [fetch_remote_data]
+
 
 class DataAdmin(admin.ModelAdmin):
     pass

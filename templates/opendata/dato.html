@@ -43,6 +43,7 @@
                             <a class="category-tag" href="{{ redirect_url }}" download>{{ format }}</a>
                         </span>
                     {% endblocktrans %}
+                    <span style="color: grey;">({{ data_size|filesizeformat }})</span>
                 {% endwith %}
             </p>
         </div>

@@ -147,13 +147,14 @@
             CHARTS.draw({
                 x: x,
                 ys: [y1, y2],
-                labels: ['Allocated', 'Announced'],
+                labels: ['Asignado', 'Anunciado'],
                 kind: 'LineChart',
                 divId: 'chart_test',
                 xType: 'date',
                 colors: ['C53425', '009DCA'],
                 my_options: {
                     height: 300,
+                    vAxis: {format: 'short', title: 'Direcciones IP'},
                     chartArea: {
                         left: "40",
                         top: "5"
@@ -185,6 +186,7 @@
                 colors: ['C53425'],
                 my_options: {
                     height: 300,
+                    vAxis: {format: 'short', title: 'Direcciones IP'},
                     chartArea: {
                         left: "100",
                         top: "5"

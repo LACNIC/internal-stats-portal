@@ -79,7 +79,8 @@ def dato(request, name=''):
             'tags': tags,
             'file': file_name,
             'format': format,
-            'ult_alt': ts_dato
+            'ult_alt': ts_dato,
+            'data_size': len(publicacion.get_data().data)
         }
     )
 
