@@ -75,7 +75,7 @@
                     <th>Responsable</th>
                     <td>
                         {% for resp in pub.responsibles.all %}
-                            {{ resp.first_name }}
+                            {{ resp.first_name }} {{ resp.last_name }}
                         {% endfor %}
                     </td>
                 </tr>
@@ -92,7 +92,6 @@
                 <tr>
                     <th>Ultima actualización</th>
                     <td>
-{#                        {{ pub.modified }}#}
                         {{ ult_alt }}
                     </td>
                 </tr>
