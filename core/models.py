@@ -11,7 +11,6 @@ from requests import get as http_get, head as http_head
 import requests, requests_ftp
 from datetime import datetime
 
-
 class DataSource(Model):
     notes = CharField('notas', unique=True, max_length=255)
 

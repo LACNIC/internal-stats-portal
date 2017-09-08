@@ -1,13 +1,13 @@
+from core.models import *
 from django.db.models import Count
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.decorators.cache import cache_page
-from core.models import *
+from itertools import chain
 from opendata.models import *
 import pytz
 
 
-# Create your views here.
 @cache_page(60 * 15)
 def home(request):
     publicaciones = Publication.objects.all()
@@ -16,7 +16,17 @@ def home(request):
         if (datetime.utcnow().replace(tzinfo=pytz.utc) - p.created).days <= 182:
             recientes.append(p)
 
-    mas_vistas = Publication.objects.annotate(
+    print Publication.objects.annotate(
+        count=Count('visit__publication')
+    ).order_by('-count')[:4]
+
+    print Publication.objects.annotate(
+        count=Count('redirect__publication')
+    ).order_by('-count')[:4]
+
+    mas_visitadas = Publication.objects.annotate(
+        count=Count('visit__publication')
+    ).annotate(
         count=Count('redirect__publication')
     ).order_by('-count')[:4]
 
@@ -31,7 +41,7 @@ def home(request):
         context={
             'pubs': publicaciones,
             'recent': recientes[0:4],
-            'most': mas_vistas,
+            'most': mas_visitadas,
             'cat': set(categorias)
         }
     )
@@ -57,14 +67,24 @@ def categoria(request, tag=''):
 
 
 def dato(request, name=''):
+    """
+        :param request: HTTP Request
+        :param name: nombre de la Publicacion
+        :return:
+    """
+
     publicacion = Publication.objects.get(name=name)
+
+    Visit(
+        url=request.path_info,
+        publication=publicacion,
+        date=datetime.now(),
+    ).save()
+
     tags = []
     for tag in publicacion.tags.all():
         tags.append(tag)
-        # if tags == '':
-        #     tags = tags + str(tag)
-        # else:
-        #     tags = tags + ', ' + str(tag)
+
     ts_dato = publicacion.get_data().timestamp
     file_name = "data/" + publicacion.name.replace(" ", "_").lower() + '-' + str(
         ts_dato.date()) + '.' + publicacion.file_format
