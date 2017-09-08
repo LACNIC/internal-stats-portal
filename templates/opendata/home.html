@@ -71,7 +71,7 @@
         <!-- Charts -->
         <div class="col-xs-12 col-md-9">
             <div class="col-xs-12 col-md-6">
-                <a href="{% url "dato" %}test"><h2>Visibilidad IPv6</h2></a>
+                <a href="{% url "dato" %}Asignaciones VS Anuncios visibles IPv6"><h2>Asignaciones VS Anuncios visibles IPv6</h2></a>
                 <div id="chart_test"></div>
             </div>
 
@@ -156,7 +156,7 @@
                     height: 300,
                     vAxis: {format: 'short', title: 'Direcciones IP'},
                     chartArea: {
-                        left: "40",
+                        left: "50",
                         top: "5"
                     }
                 }
@@ -179,16 +179,16 @@
             CHARTS.draw({
                 x: x,
                 ys: [y],
-                labels: ['Espacio IPv4 disponible'],
+                labels: ['IPv4 disponible'],
                 kind: 'LineChart',
                 divId: 'chart_test2',
                 xType: 'date',
                 colors: ['C53425'],
                 my_options: {
                     height: 300,
-                    vAxis: {format: 'short', title: 'Direcciones IP'},
+                    vAxis: {format: 'short'},
                     chartArea: {
-                        left: "100",
+                        left: "30",
                         top: "5"
                     }
                 }
@@ -222,7 +222,7 @@
                 my_options: {
                     height: 300,
                     chartArea: {
-                        left: "100",
+                        left: "30",
                         top: "5"
                     }
                 }
@@ -249,8 +249,8 @@
             }
 
             CHARTS.draw({
-                x: x.slice(x.length-200, x.length),
-                ys: [y4.slice(y4.length-200, y4.length), y6.slice(y6.length-200, y6.length)],
+                x: x.slice(x.length-100, x.length),
+                ys: [y4.slice(y4.length-100, y4.length), y6.slice(y6.length-100, y6.length)],
                 labels: ['DSC data QType A', 'DSC data QType AAAA'],
                 kind: 'LineChart',
                 divId: 'chart_test4',
@@ -259,7 +259,7 @@
                 my_options: {
                     height: 300,
                     chartArea: {
-                        left: "100",
+                        left: "30",
                         top: "5"
                     }
                 }
