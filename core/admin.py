@@ -46,7 +46,11 @@ class PublicationAdmin(admin.ModelAdmin):
         return fields
 
     def data_size(self, obj):
-        return len(obj.get_data().data)
+        data = obj.get_data().data
+        try:
+            return len(data)
+        except:
+            return 0
 
     data_size.short_description = "Latest data size"
 
