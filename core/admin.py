@@ -46,8 +46,8 @@ class PublicationAdmin(admin.ModelAdmin):
         return fields
 
     def data_size(self, obj):
-        data = obj.get_data().data
         try:
+            data = obj.get_data().data
             return len(data)
         except:
             return 0
