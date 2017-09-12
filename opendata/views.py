@@ -11,10 +11,10 @@ import pytz
 @cache_page(60 * 15)
 def home(request):
     publicaciones = Publication.objects.all()
-    recientes = []
-    for p in publicaciones:
-        if (datetime.utcnow().replace(tzinfo=pytz.utc) - p.created).days <= 182:
-            recientes.append(p)
+    recientes = sorted(publicaciones, reverse=True)
+    # for p in publicaciones:
+    #     if (datetime.utcnow().replace(tzinfo=pytz.utc) - p.created).days <= 182:
+    #         recientes.append(p)
 
     print Publication.objects.annotate(
         count=Count('visit__publication')
