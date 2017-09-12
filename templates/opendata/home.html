@@ -136,8 +136,9 @@
                         announces = announces + annou
                     } else {
                         x.push(aniomes + "-01")
-                        y1.push(allocations)
-                        y2.push(announces)
+                        y1.push(alloc)
+                        y2.push(annou)
+                        console.log(alloc)
                         allocations = 0;
                         announces = 0;
                     }
@@ -154,7 +155,7 @@
                 colors: ['C53425', '009DCA'],
                 my_options: {
                     height: 300,
-                    vAxis: {format: 'short', title: 'Direcciones IP'},
+                    vAxis: {format: 'short'},
                     chartArea: {
                         left: "50",
                         top: "5"
