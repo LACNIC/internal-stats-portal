@@ -11,7 +11,7 @@ from internal_stats_portal.settings import STATIC_OPENDATA_ROOT
 class Command(BaseCommand):
     def handle(self, *args, **options):
         now = datetime.datetime.utcnow().replace(tzinfo=pytz.utc).date()
-        publications = Publication.objects.all()
+        publications = Publication.objects.get_publishable()
 
         for p in publications:
             nombre = p.name
