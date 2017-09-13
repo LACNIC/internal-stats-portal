@@ -10,21 +10,21 @@ import pytz
 
 @cache_page(60 * 15)
 def home(request):
-    publicaciones = Publication.objects.all()
+    publicaciones = Publication.objects.get_publishable()
     recientes = sorted(publicaciones, reverse=True)
     # for p in publicaciones:
     #     if (datetime.utcnow().replace(tzinfo=pytz.utc) - p.created).days <= 182:
     #         recientes.append(p)
 
-    print Publication.objects.annotate(
+    print Publication.objects.get_publishable().annotate(
         count=Count('visit__publication')
     ).order_by('-count')[:4]
 
-    print Publication.objects.annotate(
+    print Publication.objects.get_publishable().annotate(
         count=Count('redirect__publication')
     ).order_by('-count')[:4]
 
-    mas_visitadas = Publication.objects.annotate(
+    mas_visitadas = Publication.objects.get_publishable().annotate(
         count=Count('visit__publication')
     ).annotate(
         count=Count('redirect__publication')
@@ -48,7 +48,7 @@ def home(request):
 
 
 def categoria(request, tag=''):
-    publicaciones = Publication.objects.filter(tags__name=tag)
+    publicaciones = Publication.objects.get_publishable().filter(tags__name=tag)
     related_tags = []
     for p in publicaciones:
         for t in p.tags.all():
@@ -73,7 +73,7 @@ def dato(request, name=''):
         :return:
     """
 
-    publicacion = Publication.objects.get(name=name)
+    publicacion = Publication.objects.get_publishable().get(name=name)
 
     Visit(
         url=request.path_info,
@@ -107,7 +107,7 @@ def dato(request, name=''):
 
 def search(request):
     q = request.GET.get('q')
-    datos = Publication.objects.filter(name__search=q)
+    datos = Publication.objects.get_publishable().filter(name__search=q)
     cats = Tag.objects.filter(name__search=q)
     desc = Publication.objects.filter(description__search=q)
 
@@ -134,7 +134,7 @@ def redirect(request):
     filename = redirect_from.split('/')[-1].split('.')[0].split('-')[0]
 
     pub = None
-    for p in Publication.objects.all():
+    for p in Publication.objects.get_publishable():
         if filename == p.get_filename():
             pub = p
             break

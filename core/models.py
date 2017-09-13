@@ -73,6 +73,12 @@ class Category(Model):
         verbose_name_plural = 'categorías'
 
 
+class PublicationManager(Manager):
+    def get_publishable(self):
+        publicables = Publication.objects.filter(publishable=True)
+        return publicables
+
+
 class Publication(Model):
     PROGRAMMING_LANGUAGE_CHOICES = sorted(
         [(item[1][0], item[0]) for item in get_all_lexers() if item[1]])
@@ -135,6 +141,8 @@ class Publication(Model):
         blank=True,
         null=True
     )
+
+    objects = PublicationManager()
 
     def short_description(self):
         return truncate_text(self.description, 50)
