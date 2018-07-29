@@ -6,13 +6,11 @@ python:
   - "3.4"
   - "3.5"
 
-services:
-  - postgresql
-
 addons:
+  postgresql: "9.5"
   apt:
     packages:
-    - libpq-dev
+    - libpq5=9.5.13-0ubuntu0.16.04
 
 
 install:
